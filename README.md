@@ -90,18 +90,27 @@ RFC 1918 включает себя следующие адреса:
     systemctl restart iptables  
     iptables –L –t nat - должны высветится в Chain POSTROUTING две настроенные подсети.  
 ## 3. Создание локальных учетных записей
-● Создайте пользователя sshuser на серверах HQ-SRV и BR-SRV
-o Пароль пользователя sshuser с паролем P@ssw0rd
-o Идентификатор пользователя 1010
+● Создайте пользователя sshuser на серверах HQ-SRV и BR-SRV  
+useradd -m -u 1010 sshuser  
+o Пароль пользователя sshuser с паролем P@ssw0rd  
+echo "sshuser:P@ssw0rd" | sudo chpasswd  
+o Идентификатор пользователя 1010  
 o Пользователь sshuser должен иметь возможность запускать sudo
-без дополнительной аутентификации.
+без дополнительной аутентификации.  
+usermod -aG wheel sshuser  
+nano /etc/sudoers  
+sshuser ALL=(ALL) NOPASSWD:ALL  
 ● Создайте пользователя net_admin на маршрутизаторах HQ-RTR и
-BR-RTR
-o Пароль пользователя net_admin с паролем P@$$word
+BR-RTR  
+ Настройка производится на EcoRouter:  
+ username net_admin
+o Пароль пользователя net_admin с паролем P@$$word  
+password P@$$word  
 o При настройке на EcoRouter пользователь net_admin должен
-обладать максимальными привилегиями
+обладать максимальными привилегиями  
+role admin  
 o При настройке ОС на базе Linux, запускать sudo без
-дополнительной аутентификации
+дополнительной аутентификации  
 ## 4. Настройте на интерфейсе HQ-RTR в сторону офиса HQ виртуальный
 коммутатор:
 ● Сервер HQ-SRV должен находиться в ID VLAN 100
