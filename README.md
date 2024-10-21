@@ -102,7 +102,7 @@ sshuser ALL=(ALL) NOPASSWD:ALL
 ● Создайте пользователя net_admin на маршрутизаторах HQ-RTR и
 BR-RTR  
  Настройка производится на EcoRouter:  
- username net_admin
+ username net_admin  
 o Пароль пользователя net_admin с паролем P@$$word  
 password P@$$word  
 o При настройке на EcoRouter пользователь net_admin должен
