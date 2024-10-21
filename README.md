@@ -5,9 +5,9 @@
 ● Настройте имена устройств согласно топологии. Используйте
 полное доменное имя  
 HQ-RTR | BR-RTR  
-в режиме глобальной конфигурации hostname hq-rtr | br-rtr  
+в режиме глобальной конфигурации hostname {hq-rtr, br-rtr}    
 HQ-SRV | HQ-CLI | BR-SRV |  
-hostnamectl set-hostname {hq-srv, hq-cli, br-srv}.au-team.irpo; exec bash
+hostnamectl set-hostname {hq-srv, hq-cli, br-srv}.au-team.irpo; exec bash  
 ● На всех устройствах необходимо сконфигурировать IPv4  
 Настройка адресов производиться через nmtui  
 ● IP-адрес должен быть из приватного диапазона, в случае, если сеть
