@@ -159,6 +159,7 @@
     Ip add 172.16.0.1/24
     Ip mtu 1400
     Ip tunnel 172.16.4.1/28 172.16.5.1/28 mode gre
+    end
     Conf t
     Router ospf 1
     Ospf router-id  192.168.4.1
@@ -170,6 +171,7 @@
     Ip add 172.16.0.2/24
     Ip mtu 1400
     Ip tunnel 172.16.5.1 172.16.4.1 mode gre
+    end
     Conf t
     Router ospf 1
     Ospf router-id  192.168.4.1
