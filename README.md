@@ -100,53 +100,52 @@
     o При настройке на EcoRouter пользователь net_admin должен обладать максимальными привилегиями  
     role admin  
     o При настройке ОС на базе Linux, запускать sudo без дополнительной аутентификации  
-## 4. Настройте на интерфейсе HQ-RTR в сторону офиса HQ виртуальный
-коммутатор:  
-**● Сервер HQ-SRV должен находиться в ID VLAN 100**  
-  Настройка на HQ-RTR:  
-  int te1.100  
-  ip add 192.168.0.3/26  
-  port te1  
-  service-instance te1.200  
-  encapsulation dot1q 200  
-  rewrite pop 1  
-  connect ip interface te1.100  
-  Настройка на HQ-SW:  
-  ovs-vsctl add-port ovs0 ens4  
-  ovs-vsctl set port ens4 tag=100 trunks=100  
-  ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
-  ifconfig ovs0-vlan100 up  
-**● Клиент HQ-CLI в ID VLAN 200**  
-  Настройка на HQ-RTR:  
-  int te1.200  
-  ip add 192.168.1.3/27  
-  port te1  
-  service-instance te1.200  
-  encapsulation dot1q 200  
-  rewrite pop 1  
-  connect ip interface te1.200  
-  Настройка на HQ-SW:  
-  ovs-vsctl add-port ovs0 ens5  
-  ovs-vsctl set port ens5 tag=200 trunks=200  
-  ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
-  ifconfig ovs0-vlan200 up  
-**● Создайте подсеть управления с ID VLAN 999**  
-  Настройка на HQ-RTR:  
-  int vl999  
-  ip add 192.168.0.81/29  
-  description toSW  
-  port te1  
-  Service-instance toSW  
-  Encapsulation untagged  
-  ex  
-  Int vl999  
-  connect port te1 service-instance vl999  
-  Настройка на HQ-SW:  
-  ovs-vsctl add-br ovs0  
-  ovs-vsctl add-port ovs0 ens3  
-  ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
-  ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set Interface ovs0-vlan999 type=internal  
-  ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
+## 4. Настройте на интерфейсе HQ-RTR в сторону офиса HQ виртуальный коммутатор:  
+ ### ● Сервер HQ-SRV должен находиться в ID VLAN 100  
+    Настройка на HQ-RTR:  
+    int te1.100  
+    ip add 192.168.0.3/26  
+    port te1  
+    service-instance te1.200  
+    encapsulation dot1q 200  
+    rewrite pop 1  
+    connect ip interface te1.100  
+    Настройка на HQ-SW:  
+    ovs-vsctl add-port ovs0 ens4  
+    ovs-vsctl set port ens4 tag=100 trunks=100  
+    ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
+    ifconfig ovs0-vlan100 up  
+ ### ● Клиент HQ-CLI в ID VLAN 200  
+    Настройка на HQ-RTR:  
+    int te1.200  
+    ip add 192.168.1.3/27  
+    port te1  
+    service-instance te1.200  
+    encapsulation dot1q 200  
+    rewrite pop 1  
+    connect ip interface te1.200  
+    Настройка на HQ-SW:  
+    ovs-vsctl add-port ovs0 ens5  
+    ovs-vsctl set port ens5 tag=200 trunks=200  
+    ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
+    ifconfig ovs0-vlan200 up  
+ ### ● Создайте подсеть управления с ID VLAN 999  
+    Настройка на HQ-RTR:  
+    int vl999  
+    ip add 192.168.0.81/29  
+    description toSW  
+    port te1  
+    Service-instance toSW  
+    Encapsulation untagged  
+    ex  
+    Int vl999  
+    connect port te1 service-instance vl999  
+    Настройка на HQ-SW:  
+    ovs-vsctl add-br ovs0  
+    ovs-vsctl add-port ovs0 ens3  
+    ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
+    ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set Interface ovs0-vlan999 type=internal  
+    ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
 **● Основные сведения о настройке коммутатора и выбора реализации разделения на VLAN занесите в отчёт**  
 ## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-SRV:  
   ● Для подключения используйте порт 2024  
@@ -166,8 +165,37 @@
   ● Обеспечьте защиту выбранного протокола посредством парольной защиты  
   ● Сведения о настройке и защите протокола занесите в отчёт  
 ## 8. Настройка динамической трансляции адресов.  
-  ● Настройте динамическую трансляцию адресов для обоих офисов.  
-  ● Все устройства в офисах должны иметь доступ к сети Интернет  
+ ### ● Настройте динамическую трансляцию адресов для обоих офисов.  
+    Настройка производится на EcoRouter HQ-RTR: 
+    ip nat pool nat1 192.168.0.1-192.168.0.254  
+    ip nat source dynamic inside-to-outside pool nat1 overload 172.16.4.1  
+    Настройка производится на EcoRouter BR-RTR: 
+    ip nat pool nat2 192.168.0.1-192.168.0.254  
+    ip nat source dynamic inside-to-outside pool nat2 overload 172.16.5.1 
+### ● Все устройства в офисах должны иметь доступ к сети Интернет  
+    Настройка производится на EcoRouter HQ-RTR:
+    en
+    conf t
+    int ISP
+    ip nat outside
+    ex
+    int vl999
+    ip nat inside
+    ex
+    int te1.100
+    ip nat inside
+    ex
+    int te1.200
+    ip nat inside
+    Настройка производится на EcoRouter BR-RTR: 
+    en
+    conf t
+    int ISP
+    ip nat outside
+    ex
+    int SRV
+    ip nat inside
+    ex
 ## 9. Настройка протокола динамической конфигурации хостов.  
   ● Настройте нужную подсеть  
   ● Для офиса HQ в качестве сервера DHCP выступает маршрутизатор
