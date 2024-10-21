@@ -61,7 +61,7 @@ RFC 1918 включает себя следующие адреса:
     HQ-RTR - ip route 0.0.0.0/0 172.16.4.14
     BR-RTR - ip route 0.0.0.0/0 172.16.5.14
     o Интерфейс, к которому подключен HQ-RTR, подключен к сети 172.16.4.0/28
-    Настройка производится на EcoRouter:
+    Настройка производится на EcoRouter:  
     en  
     conf t  
     int ISP  
@@ -72,7 +72,7 @@ RFC 1918 включает себя следующие адреса:
     connect ip interface ISP  
     wr  
     o Интерфейс, к которому подключен BR-RTR, подключен к сети 172.16.5.0/28
-    Настройка производится на EcoRouter:
+    Настройка производится на EcoRouter:  
     en  
     conf t  
     int ISP  
@@ -82,7 +82,14 @@ RFC 1918 включает себя следующие адреса:
     encapsulation untagged  
     connect ip interface ISP  
     wr  
-    o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR для доступа к сети Интернет
+    o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR для доступа к сети Интернет  
+    dnf install iptables-services –y   
+    systemctl enable ––now iptables  
+    iptables –t nat –A POSTROUTING –s 172.16.4.0/28 –o ens3 –j MASQUERADE  
+    iptables –t nat –A POSTROUTING –s 172.16.5.0/28 –o ens3 –j MASQUERADE  
+    iptables-save > /etc/sysconfig/iptables  
+    systemctl restart iptables  
+    iptables –L –t nat - должны высветится в Chain POSTROUTING две настроенные подсети.  
 ## 3. Создание локальных учетных записей
 ● Создайте пользователя sshuser на серверах HQ-SRV и BR-SRV
 o Пароль пользователя sshuser с паролем P@ssw0rd
