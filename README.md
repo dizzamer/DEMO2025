@@ -153,7 +153,29 @@
   ● Ограничьте количество попыток входа до двух  
   ● Настройте баннер «Authorized access only»  
 ## 6. Между офисами HQ и BR необходимо сконфигурировать ip туннель  
-  o Сведения о туннеле занесите в отчёт  
+  ### o Сведения о туннеле занесите в отчёт  
+    Настройка на HQ-RTR:
+    Interface tunnel.1
+    Ip add 172.16.0.1/24
+    Ip mtu 1400
+    Ip tunnel 172.16.4.1/28 172.16.5.1/28 mode gre
+    Conf t
+    Router ospf 1
+    Ospf router-id  192.168.4.1
+    Network 172.16.0.1/24 area 0
+    Network 172.16.4.0/28 area 0
+    Passive-interface default
+    Настройка на BR-RTR:
+    Interface tunnel.1
+    Ip add 172.16.0.2/24
+    Ip mtu 1400
+    Ip tunnel 172.16.5.1 172.16.4.1 mode gre
+    Conf t
+    Router ospf 1
+    Ospf router-id  192.168.4.1
+    Network 172.16.0.1/24 area 0
+    Network 172.16.4.0/28 area 0
+    Passive-interface default
   o На выбор технологии GRE или IP in IP  
 ## 7. Обеспечьте динамическую маршрутизацию: ресурсы одного офиса  
   должны быть доступны из другого офиса. Для обеспечения динамической  
