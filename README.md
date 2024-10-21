@@ -46,8 +46,8 @@
 
 ## 2. Настройка ISP
  ### ● Настройте адресацию на интерфейсах:  
-     Интерфейс, подключенный к магистральному провайдеру, получает адрес по DHCP  
-    **o Настройте маршруты по умолчанию там, где это необходимо**   
+    Интерфейс, подключенный к магистральному провайдеру, получает адрес по DHCP  
+    o Настройте маршруты по умолчанию там, где это необходимо   
     Маршруты по умолчанию настраиваются на роутерах:  
     HQ-RTR - ip route 0.0.0.0/0 172.16.4.14  
     BR-RTR - ip route 0.0.0.0/0 172.16.5.14  
@@ -82,7 +82,7 @@
     systemctl restart iptables  
     iptables –L –t nat - должны высветится в Chain POSTROUTING две настроенные подсети.  
 ## 3. Создание локальных учетных записей
- ###● Создайте пользователя sshuser на серверах HQ-SRV и BR-SRV  
+ ### ● Создайте пользователя sshuser на серверах HQ-SRV и BR-SRV  
     useradd -m -u 1010 sshuser  
     o Пароль пользователя sshuser с паролем P@ssw0rd  
     echo "sshuser:P@ssw0rd" | sudo chpasswd  
@@ -92,101 +92,96 @@
     usermod -aG wheel sshuser  
     nano /etc/sudoers  
     sshuser ALL=(ALL) NOPASSWD:ALL  
- ###● Создайте пользователя net_admin на маршрутизаторах HQ-RTR и
-BR-RTR  
- Настройка производится на EcoRouter:  
- username net_admin  
-o Пароль пользователя net_admin с паролем P@$$word  
-password P@$$word  
-o При настройке на EcoRouter пользователь net_admin должен
-обладать максимальными привилегиями  
-role admin  
-o При настройке ОС на базе Linux, запускать sudo без
-дополнительной аутентификации  
+   ### ● Создайте пользователя net_admin на маршрутизаторах HQ-RTR и BR-RTR  
+    Настройка производится на EcoRouter:  
+    username net_admin  
+    o Пароль пользователя net_admin с паролем P@$$word  
+    password P@$$word  
+    o При настройке на EcoRouter пользователь net_admin должен обладать максимальными привилегиями  
+    role admin  
+    o При настройке ОС на базе Linux, запускать sudo без дополнительной аутентификации  
 ## 4. Настройте на интерфейсе HQ-RTR в сторону офиса HQ виртуальный
 коммутатор:  
-● Сервер HQ-SRV должен находиться в ID VLAN 100  
-Настройка на HQ-RTR:  
-int te1.100  
-ip add 192.168.0.3/26  
-port te1  
-service-instance te1.200  
-encapsulation dot1q 200  
-rewrite pop 1  
-connect ip interface te1.100  
-Настройка на HQ-SW:  
-ovs-vsctl add-port ovs0 ens4  
-ovs-vsctl set port ens4 tag=100 trunks=100  
-ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
-ifconfig ovs0-vlan100 up  
-● Клиент HQ-CLI в ID VLAN 200  
-Настройка на HQ-RTR:  
-int te1.200  
-ip add 192.168.1.3/27  
-port te1  
-service-instance te1.200  
-encapsulation dot1q 200  
-rewrite pop 1  
-connect ip interface te1.200  
-Настройка на HQ-SW:  
-ovs-vsctl add-port ovs0 ens5  
-ovs-vsctl set port ens5 tag=200 trunks=200  
-ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
-ifconfig ovs0-vlan200 up  
-● Создайте подсеть управления с ID VLAN 999  
-Настройка на HQ-RTR:  
-int vl999  
-ip add 192.168.0.81/29  
-description toSW  
-port te1  
-Service-instance toSW  
-Encapsulation untagged  
-ex  
-Int vl999  
-connect port te1 service-instance vl999  
-Настройка на HQ-SW:  
-ovs-vsctl add-br ovs0  
-ovs-vsctl add-port ovs0 ens3  
-ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
-ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set Interface ovs0-vlan999 type=internal  
-ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
-● Основные сведения о настройке коммутатора и выбора реализации
-разделения на VLAN занесите в отчёт  
-## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-
-SRV:  
-● Для подключения используйте порт 2024  
-● Разрешите подключения только пользователю sshuser  
-● Ограничьте количество попыток входа до двух  
-● Настройте баннер «Authorized access only»  
+**● Сервер HQ-SRV должен находиться в ID VLAN 100**  
+  Настройка на HQ-RTR:  
+  int te1.100  
+  ip add 192.168.0.3/26  
+  port te1  
+  service-instance te1.200  
+  encapsulation dot1q 200  
+  rewrite pop 1  
+  connect ip interface te1.100  
+  Настройка на HQ-SW:  
+  ovs-vsctl add-port ovs0 ens4  
+  ovs-vsctl set port ens4 tag=100 trunks=100  
+  ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
+  ifconfig ovs0-vlan100 up  
+**● Клиент HQ-CLI в ID VLAN 200**  
+  Настройка на HQ-RTR:  
+  int te1.200  
+  ip add 192.168.1.3/27  
+  port te1  
+  service-instance te1.200  
+  encapsulation dot1q 200  
+  rewrite pop 1  
+  connect ip interface te1.200  
+  Настройка на HQ-SW:  
+  ovs-vsctl add-port ovs0 ens5  
+  ovs-vsctl set port ens5 tag=200 trunks=200  
+  ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
+  ifconfig ovs0-vlan200 up  
+**● Создайте подсеть управления с ID VLAN 999**  
+  Настройка на HQ-RTR:  
+  int vl999  
+  ip add 192.168.0.81/29  
+  description toSW  
+  port te1  
+  Service-instance toSW  
+  Encapsulation untagged  
+  ex  
+  Int vl999  
+  connect port te1 service-instance vl999  
+  Настройка на HQ-SW:  
+  ovs-vsctl add-br ovs0  
+  ovs-vsctl add-port ovs0 ens3  
+  ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
+  ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set Interface ovs0-vlan999 type=internal  
+  ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
+**● Основные сведения о настройке коммутатора и выбора реализации разделения на VLAN занесите в отчёт**  
+## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-SRV:  
+  ● Для подключения используйте порт 2024  
+  ● Разрешите подключения только пользователю sshuser  
+  ● Ограничьте количество попыток входа до двух  
+  ● Настройте баннер «Authorized access only»  
 ## 6. Между офисами HQ и BR необходимо сконфигурировать ip туннель  
- Сведения о туннеле занесите в отчёт  
- На выбор технологии GRE или IP in IP  
+   Сведения о туннеле занесите в отчёт  
+   На выбор технологии GRE или IP in IP  
 ## 7. Обеспечьте динамическую маршрутизацию: ресурсы одного офиса  
-должны быть доступны из другого офиса. Для обеспечения динамической  
-маршрутизации используйте link state протокол на ваше усмотрение.  
-● Разрешите выбранный протокол только на интерфейсах в ip
-туннеле  
-● Маршрутизаторы должны делиться маршрутами только друг с
-другом  
-● Обеспечьте защиту выбранного протокола посредством парольной защиты  
-● Сведения о настройке и защите протокола занесите в отчёт  
+  должны быть доступны из другого офиса. Для обеспечения динамической  
+  маршрутизации используйте link state протокол на ваше усмотрение.  
+  ● Разрешите выбранный протокол только на интерфейсах в ip
+  туннеле  
+  ● Маршрутизаторы должны делиться маршрутами только друг с
+  другом  
+  ● Обеспечьте защиту выбранного протокола посредством парольной защиты  
+  ● Сведения о настройке и защите протокола занесите в отчёт  
 ## 8. Настройка динамической трансляции адресов.  
-● Настройте динамическую трансляцию адресов для обоих офисов.  
-● Все устройства в офисах должны иметь доступ к сети Интернет  
+  ● Настройте динамическую трансляцию адресов для обоих офисов.  
+  ● Все устройства в офисах должны иметь доступ к сети Интернет  
 ## 9. Настройка протокола динамической конфигурации хостов.  
-● Настройте нужную подсеть  
-● Для офиса HQ в качестве сервера DHCP выступает маршрутизатор
-HQ-RTR.  
-● Клиентом является машина HQ-CLI.  
-● Исключите из выдачи адрес маршрутизатора  
-● Адрес шлюза по умолчанию – адрес маршрутизатора HQ-RTR.  
-● Адрес DNS-сервера для машины HQ-CLI – адрес сервера HQ-SRV.  
-● DNS-суффикс для офисов HQ – au-team.irpo  
-● Сведения о настройке протокола занесите в отчёт  
+  ● Настройте нужную подсеть  
+  ● Для офиса HQ в качестве сервера DHCP выступает маршрутизатор
+  HQ-RTR.  
+  ● Клиентом является машина HQ-CLI.  
+  ● Исключите из выдачи адрес маршрутизатора  
+  ● Адрес шлюза по умолчанию – адрес маршрутизатора HQ-RTR.  
+  ● Адрес DNS-сервера для машины HQ-CLI – адрес сервера HQ-SRV.  
+  ● DNS-суффикс для офисов HQ – au-team.irpo  
+  ● Сведения о настройке протокола занесите в отчёт  
 ## 10. Настройка DNS для офисов HQ и BR.  
-● Основной DNS-сервер реализован на HQ-SRV.  
-● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
-● В качестве DNS сервера пересылки используйте любой общедоступный DNS сервер  
+  ● Основной DNS-сервер реализован на HQ-SRV.  
+  ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
+  ● В качестве DNS сервера пересылки используйте любой общедоступный DNS сервер  
 ## 11. Настройте часовой пояс на всех устройствах, согласно месту проведения
 экзамена.  
 Таблица 2. Таблица имен  
