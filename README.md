@@ -164,10 +164,11 @@
     end
     Conf t
     Router ospf 1
-    Ospf router-id  192.168.4.1
+    Ospf router-id  192.168.10.1
     Network 172.16.0.1/24 area 0
     Network 172.16.4.0/28 area 0
-    Passive-interface default
+    passive-interface default
+    no passive-interface default tunnel.0
     Настройка на BR-RTR:
     Interface tunnel.1
     Ip add 172.16.0.2/30
