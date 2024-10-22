@@ -157,7 +157,9 @@
     Настройка на HQ-RTR:
     Interface tunnel.1
     Ip add 172.16.0.1/24
-    Ip mtu 1400
+    Ip mtu 1476
+    ip ospf network broadcast
+    ip ospf mtu-ignore
     Ip tunnel 172.16.4.1/28 172.16.5.1/28 mode gre
     end
     Conf t
@@ -169,7 +171,9 @@
     Настройка на BR-RTR:
     Interface tunnel.1
     Ip add 172.16.0.2/24
-    Ip mtu 1400
+    Ip mtu 1476
+    ip ospf mtu-ignore
+    ip opsf network broadcast
     Ip tunnel 172.16.5.1 172.16.4.1 mode gre
     end
     Conf t
