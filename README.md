@@ -139,7 +139,7 @@
     Encapsulation untagged  
     ex  
     Int vl999  
-    connect port te1 service-instance vl999  
+    connect port te1 service-instance toSW  
     Настройка на HQ-SW:  
     ovs-vsctl add-br ovs0  
     ovs-vsctl add-port ovs0 ens3  
