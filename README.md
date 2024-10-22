@@ -104,7 +104,7 @@
  ### ● Сервер HQ-SRV должен находиться в ID VLAN 100  
     Настройка на HQ-RTR:  
     int te1.100  
-    ip add 192.168.0.3/26  
+    ip add 192.168.0.62/26  
     port te1  
     service-instance te1.100  
     encapsulation dot1q 100  
@@ -118,7 +118,7 @@
  ### ● Клиент HQ-CLI в ID VLAN 200  
     Настройка на HQ-RTR:  
     int te1.200  
-    ip add 192.168.1.3/27  
+    ip add 192.168.1.78/28  
     port te1  
     service-instance te1.200  
     encapsulation dot1q 200  
