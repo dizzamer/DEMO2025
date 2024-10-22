@@ -160,7 +160,7 @@
     Ip mtu 1476
     ip ospf network broadcast
     ip ospf mtu-ignore
-    Ip tunnel 172.16.4.1/28 172.16.5.1/28 mode gre
+    Ip tunnel 172.16.4.1 172.16.5.1 mode gre
     end
     Conf t
     Router ospf 1
