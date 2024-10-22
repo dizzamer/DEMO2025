@@ -33,7 +33,7 @@
 |                  | 192.168.0.81/29     | te1         | HQ_NET    | -            |
 |                  | 192.168.0.3/26      | te1.100     | -         | -            |
 |                  | 192.168.1.3/27      | te1.200     | -         |              |
-|                  | 172.16.0.1/24       | GRE         | TUN       |              |
+|                  | 172.16.0.1/30       | GRE         | TUN       |              |
 | HQ-SW            | 192.168.0.82/29     | ens3        | HQ_NET    |              |
 |                  | 192.168.0.1/26      | ens4        | SRV_NET   |              |
 |                  | 192.168.0.65/28     | ens5        | CLI_NET   |              |
@@ -41,7 +41,7 @@
 | HQ-CLI           | 192.168.0.80/28     | ens3        | CLI_NET   | 192.168.0.65 |
 | BR-RTR           | 172.16.5.1/28       | ens3        | ISP_BR    | 172.16.5.14  |
 |                  | 192.168.1.1/27      | ens4        | BR_NET    |              |
-|                  | 172.16.0.2/24       | GRE         | TUN       |              |
+|                  | 172.16.0.2/30       | GRE         | TUN       |              |
 | BR-SRV           | 192.168.1.2/27      | BR_NET      | BR_NET    | 192.168.1.1  |
 
 ## 2. Настройка ISP
@@ -156,7 +156,7 @@
   ### o Сведения о туннеле занесите в отчёт  
     Настройка на HQ-RTR:
     Interface tunnel.1
-    Ip add 172.16.0.1/24
+    Ip add 172.16.0.1/30
     Ip mtu 1476
     ip ospf network broadcast
     ip ospf mtu-ignore
@@ -170,7 +170,7 @@
     Passive-interface default
     Настройка на BR-RTR:
     Interface tunnel.1
-    Ip add 172.16.0.2/24
+    Ip add 172.16.0.2/30
     Ip mtu 1476
     ip ospf mtu-ignore
     ip opsf network broadcast
