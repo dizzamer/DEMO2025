@@ -202,12 +202,14 @@
      ex
      interface tunnel.1
      ip ospf authentication-key ecorouter
+     wr
      Настройка производится на EcoRouter BR-RTR:
      router ospf 1
      area 0 authentication 
      ex
      interface tunnel.1
      ip ospf authentication-key ecorouter
+     wr
   ● Сведения о настройке и защите протокола занесите в отчёт  
 ## 8. Настройка динамической трансляции адресов.  
  ### ● Настройте динамическую трансляцию адресов для обоих офисов.  
