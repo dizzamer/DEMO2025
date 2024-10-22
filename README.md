@@ -165,8 +165,9 @@
     Conf t
     Router ospf 1
     Ospf router-id  192.168.10.1
-    Network 172.16.0.1/24 area 0
-    Network 172.16.4.0/28 area 0
+    network 172.16.0.0 0.0.0.3 area 0
+    network 192.168.0.0 0.0.0.63 area 0
+    network 192.158.1.0 0.0.0.15 area 0
     passive-interface default
     no passive-interface default tunnel.0
     Настройка на BR-RTR:
@@ -180,8 +181,8 @@
     Conf t
     Router ospf 1
     Ospf router-id  192.168.4.1
-    Network 172.16.0.1/24 area 0
-    Network 172.16.4.0/28 area 0
+    Network 172.16.0.1 0.0.0.3 area 0
+    Network 192.168.1.0 0.0.0.31 area 0
     Passive-interface default
   o На выбор технологии GRE или IP in IP  
 ## 7. Обеспечьте динамическую маршрутизацию: ресурсы одного офиса должны быть доступны из другого офиса. Для обеспечения динамической  маршрутизации используйте link state протокол на ваше усмотрение.  
