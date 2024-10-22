@@ -106,8 +106,8 @@
     int te1.100  
     ip add 192.168.0.3/26  
     port te1  
-    service-instance te1.200  
-    encapsulation dot1q 200  
+    service-instance te1.100  
+    encapsulation dot1q 100  
     rewrite pop 1  
     connect ip interface te1.100  
     Настройка на HQ-SW:  
