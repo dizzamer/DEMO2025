@@ -212,7 +212,7 @@
     ip nat pool nat1 192.168.0.1-192.168.0.254  
     ip nat source dynamic inside-to-outside pool nat1 overload 172.16.4.1  
     Настройка производится на EcoRouter BR-RTR: 
-    ip nat pool nat2 192.168.0.1-192.168.0.254  
+    ip nat pool nat2 192.168.1.1-192.168.1.254  
     ip nat source dynamic inside-to-outside pool nat2 overload 172.16.5.1 
 ### ● Все устройства в офисах должны иметь доступ к сети Интернет  
     Настройка производится на EcoRouter HQ-RTR:
