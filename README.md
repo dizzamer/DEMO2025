@@ -250,7 +250,7 @@
     en
     conf t
     dhcp-server 1
-    dhcp pool dhcpHQ 1
+    pool dhcpHQ 1
     domain-name au.team
     mask 255.255.255.240
     gateway 192.168.0.65
