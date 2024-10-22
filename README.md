@@ -167,9 +167,9 @@
     Ospf router-id  192.168.10.1
     network 172.16.0.0 0.0.0.3 area 0
     network 192.168.0.0 0.0.0.63 area 0
-    network 192.158.1.0 0.0.0.15 area 0
+    network 192.168.1.0 0.0.0.15 area 0
     passive-interface default
-    no passive-interface default tunnel.0
+    no passive-interface tunnel.1
     Настройка на BR-RTR:
     Interface tunnel.1
     Ip add 172.16.0.2/30
@@ -184,6 +184,7 @@
     Network 172.16.0.1 0.0.0.3 area 0
     Network 192.168.1.0 0.0.0.31 area 0
     Passive-interface default
+    no passive-interface tunnel.1
   o На выбор технологии GRE или IP in IP  
 ## 7. Обеспечьте динамическую маршрутизацию: ресурсы одного офиса должны быть доступны из другого офиса. Для обеспечения динамической  маршрутизации используйте link state протокол на ваше усмотрение.  
   ● Разрешите выбранный протокол только на интерфейсах в ip туннеле  
