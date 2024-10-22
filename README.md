@@ -32,7 +32,7 @@
 | HQ-RTR           | 172.16.4.1/28       | te0         | ISP_HQ    | 172.16.4.14  |
 |                  | 192.168.0.81/29     | te1         | HQ_NET    | -            |
 |                  | 192.168.0.3/26      | te1.100     | -         | -            |
-|                  | 192.168.1.3/27      | te1.200     | -         |              |
+|                  | 192.168.1.3/28      | te1.200     | -         |              |
 |                  | 172.16.0.1/30       | GRE         | TUN       |              |
 | HQ-SW            | 192.168.0.82/29     | ens3        | HQ_NET    |              |
 |                  | 192.168.0.1/26      | ens4        | SRV_NET   |              |
@@ -42,7 +42,7 @@
 | BR-RTR           | 172.16.5.1/28       | ens3        | ISP_BR    | 172.16.5.14  |
 |                  | 192.168.1.1/27      | ens4        | BR_NET    |              |
 |                  | 172.16.0.2/30       | GRE         | TUN       |              |
-| BR-SRV           | 192.168.1.2/27      | BR_NET      | BR_NET    | 192.168.1.1  |
+| BR-SRV           | 192.168.1.2/27      | ens3      | BR_NET    | 192.168.1.1  |
 
 ## 2. Настройка ISP
  ### ● Настройте адресацию на интерфейсах:  
@@ -175,13 +175,13 @@
     Ip add 172.16.0.2/30
     Ip mtu 1476
     ip ospf mtu-ignore
-    ip opsf network broadcast
+    ip ospf network broadcast
     Ip tunnel 172.16.5.1 172.16.4.1 mode gre
     end
     Conf t
     Router ospf 1
     Ospf router-id  172.16.0.2
-    Network 172.16.0.1 0.0.0.3 area 0
+    Network 172.16.0.0 0.0.0.3 area 0
     Network 192.168.1.0 0.0.0.31 area 0
     Passive-interface default
     no passive-interface tunnel.1
