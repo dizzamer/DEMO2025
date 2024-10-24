@@ -272,7 +272,9 @@
     dnf install bind -y
     systemctl enable --now named
     cp /etc/named/named.conf /etc/named/named.conf.backup
-    
+    nano /etc/named.conf
+    ![изображение](https://github.com/user-attachments/assets/bc5fb3c0-86cb-47b4-9e98-ebd3b9e15127)
+
   ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
   ● В качестве DNS сервера пересылки используйте любой общедоступный DNS сервер  
 ## 11. Настройте часовой пояс на всех устройствах, согласно месту проведения
