@@ -273,7 +273,7 @@
     systemctl enable --now named
     cp /etc/named/named.conf /etc/named/named.conf.backup
     nano /etc/named.conf
-    ![dns](https://github.com/dizzamer/DEMO2025/dns.png)
+    ![dns](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)
     ![dns 2](https://github.com/dizzamer/DEMO2025/dns2.png)
     mkdir /var/named/master
     nano /var/named/master/au.team
