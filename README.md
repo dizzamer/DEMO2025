@@ -73,7 +73,8 @@
     encapsulation untagged  
     connect ip interface ISP  
     wr  
-    o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR для доступа к сети Интернет  
+    o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR  
+    для доступа к сети Интернет  
     dnf install iptables-services –y   
     systemctl enable ––now iptables  
     iptables –t nat –A POSTROUTING –s 172.16.4.0/28 –o ens3 –j MASQUERADE  
