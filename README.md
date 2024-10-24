@@ -274,10 +274,10 @@
     cp /etc/named/named.conf /etc/named/named.conf.backup  
     nano /etc/named.conf  
     ![named первая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)  
-    ![named вторая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns2.png)  
+    ![named вторая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns 2.png)  
     mkdir /var/named/master  
     nano /var/named/master/au.team  
-    ![au.team.irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)  
+    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/auteamzone.png)  
     Проверить зоны можно командой named-checkconf -z  
     Зоны доделаю в ближайшее время..  
   ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
