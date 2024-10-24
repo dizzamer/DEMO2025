@@ -273,9 +273,12 @@
     systemctl enable --now named
     cp /etc/named/named.conf /etc/named/named.conf.backup
     nano /etc/named.conf
+    ![dns](https://github.com/user-attachments/assets/205c63dd-26af-4e86-9ef4-f172d547f9f6)
+    ![dns 2](https://github.com/user-attachments/assets/c6675b0a-e1ea-4786-b99d-dd0acb284ebd)
     mkdir /var/named/master
     nano /var/named/master/au.team
-    
+    ![au team zone](https://github.com/user-attachments/assets/57850f5d-537a-4528-9725-64a779db9850)
+
   ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
   ● В качестве DNS сервера пересылки используйте любой общедоступный DNS сервер  
 ## 11. Настройте часовой пояс на всех устройствах, согласно месту проведения
