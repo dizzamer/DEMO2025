@@ -273,11 +273,11 @@
     systemctl enable --now named
     cp /etc/named/named.conf /etc/named/named.conf.backup
     nano /etc/named.conf
-    (https://github.com/dizzamer/DEMO2025/blob/main/dns.png)
-    (https://github.com/dizzamer/DEMO2025/blob/main/dns2.png)
+    ![Иллюстрация к проекту](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)
+    ![Иллюстрация к проекту](https://github.com/dizzamer/DEMO2025/blob/main/dns2.png)
     mkdir /var/named/master
     nano /var/named/master/au.team
-    (https://github.com/dizzamer/DEMO2025/blob/main/dns.png)
+    ![Иллюстрация к проекту](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)
     Проверить зоны можно командой named-checkconf -z  
   ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
   ● В качестве DNS сервера пересылки используйте любой общедоступный DNS сервер  
