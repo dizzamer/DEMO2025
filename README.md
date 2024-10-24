@@ -297,4 +297,5 @@ HQ-RTR moodle.au-team.irpo CNAME
 HQ-RTR wiki.au-team.irpo CNAME  
 
 
+# Модуль № 2:Организация сетевого администрирования операционных систем
 
