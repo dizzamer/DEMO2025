@@ -285,22 +285,21 @@
     Проверить зоны можно командой named-checkconf -z  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
   ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
+### Таблица 2. Таблица имен  
+   | Устройство | Запись              | Тип    | 
+   | ---------  |  ------             | ----   |
+   | HQ-RTR     | hq-rtr.au-team.irpo | A,PTR  | 
+   | BR-RTR     | br-rtr.au-team.irpo | A      |
+   | HQ-SRV     | hq-srv.au-team.irpo | A,PTR  |
+   | HQ-CLI     | hq-cli.au-team.irpo | A,PTR  |
+   | BR-SRV     | br-srv.au-team.irpo | A      |
+   | HQ-RTR     | moodle.au-team.irpo | CNAME  | 
+   | HQ-RTR     | wiki.au-team.irpo   | CNAME  |  
+      
   ● В качестве DNS сервера пересылки используйте любой общедоступный DNS сервер  
 ## 11. Настройте часовой пояс на всех устройствах, согласно месту проведения экзамена.  
    ### Настройка проивзодится на hq-srv:  
-    timedatectl set-timezone
-    
-
-Таблица 2. Таблица имен  
-Устройство Запись Тип  
-HQ-RTR hq-rtr.au-team.irpo A,PTR  
-BR-RTR br-rtr.au-team.irpo A  
-HQ-SRV hq-srv.au-team.irpo A,PTR  
-HQ-CLI hq-cli.au-team.irpo A,PTR  
-BR-SRV br-srv.au-team.irpo A  
-HQ-RTR moodle.au-team.irpo CNAME  
-HQ-RTR wiki.au-team.irpo CNAME  
-
+    timedatectl set-timezone  
 
 # Модуль № 2:Организация сетевого администрирования операционных систем  
 
