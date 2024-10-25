@@ -60,7 +60,7 @@
     service-instance toISP  
     encapsulation untagged  
     connect ip interface ISP  
-    wr  
+    wr  mem  
     o Интерфейс, к которому подключен BR-RTR, подключен к сети 172.16.5.0/28  
     Настройка производится на EcoRouter:  
     en  
@@ -71,7 +71,7 @@
     service-instance toISP  
     encapsulation untagged  
     connect ip interface ISP  
-    wr  
+    wr  mem  
     o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR  
     для доступа к сети Интернет:  
     dnf install iptables-services –y   
@@ -184,7 +184,7 @@
     Network 172.16.0.0 0.0.0.3 area 0
     Network 192.168.1.0 0.0.0.31 area 0
     Passive-interface default
-    no passive-interface tunnel.1
+    no passive-interface tunnel.1  
   o На выбор технологии GRE или IP in IP  
 ## 7. Обеспечьте динамическую маршрутизацию: ресурсы одного офиса должны быть доступны из другого офиса. Для обеспечения динамической  маршрутизации используйте link state протокол на ваше усмотрение.  
   ● Разрешите выбранный протокол только на интерфейсах в ip туннеле  
@@ -200,16 +200,16 @@
      router ospf 1
      area 0 authentication 
      ex
-     interface tunnel.1
-     ip ospf authentication-key ecorouter
-     wr
+     interface tunnel.1  
+     ip ospf authentication-key ecorouter  
+     wr mem  
      Настройка производится на EcoRouter BR-RTR:
-     router ospf 1
+     router ospf 1  
      area 0 authentication 
-     ex
-     interface tunnel.1
-     ip ospf authentication-key ecorouter
-     wr
+     ex  
+     interface tunnel.1  
+     ip ospf authentication-key ecorouter  
+     wr mem  
   ● Сведения о настройке и защите протокола занесите в отчёт  
 ## 8. Настройка динамической трансляции адресов.  
  ### ● Настройте динамическую трансляцию адресов для обоих офисов.  
@@ -257,7 +257,7 @@
     gateway 192.168.0.65
     dns 192.168.0.1
     end
-    wr mem
+    wr mem  
   ###  ● Клиентом является машина HQ-CLI.  
       interface te1.200
       dhcp-server 1
