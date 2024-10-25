@@ -274,15 +274,16 @@
     nano /etc/named.conf  
     ![named первая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)  
     ![named вторая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns2.png)  
-    mkdir /var/named/master
-    chown -R root:named /var/named/master
-    chmod 0640 /var/named/master/*
+    mkdir /var/named/master  
+    chown -R root:named /var/named/master  
+    chmod 0640 /var/named/master/*  
     nano /var/named/master/au.team  
-    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/auteamzone.png)
-    nano /var/named/master/0.168.192.zone
-    
+    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/auteamzone.png)  
+    nano /var/named/master/0.168.192.zone  
+    ![au team irpo обратная зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192zone.png)  
+    systemctl restart named  
     Проверить зоны можно командой named-checkconf -z  
-    Зоны доделаю в ближайшее время..  
+    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
   ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
   ● В качестве DNS сервера пересылки используйте любой общедоступный DNS сервер  
 ## 11. Настройте часовой пояс на всех устройствах, согласно месту проведения экзамена.  
