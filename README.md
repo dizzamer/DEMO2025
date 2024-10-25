@@ -39,9 +39,9 @@
  | HQ-SRV           | 192.168.0.1/26      | ens3        | SRV_NET   | 192.168.0.62 |
  | HQ-CLI           | 192.168.0.80/28     | ens3        | CLI_NET   | 192.168.0.78 |
  | BR-RTR           | 172.16.5.1/28       | te0         | ISP_BR    | 172.16.5.14  |
- |                  | 192.168.1.1/27      | te1         | BR_NET    |              |
+ |                  | 192.168.2.1/27      | te1         | BR_NET    |              |
  |                  | 172.16.0.2/30       | GRE         | TUN       |              |
- | BR-SRV           | 192.168.1.2/27      | ens3        | BR_NET    | 192.168.1.1  |
+ | BR-SRV           | 192.168.2.2/27      | ens3        | BR_NET    | 192.168.1.1  |
 
 ## 2. Настройка ISP
  ### ● Настройте адресацию на интерфейсах:  
@@ -164,7 +164,7 @@
     end
     Conf t
     Router ospf 1
-    Ospf router-id  192.168.10.1
+    Ospf router-id  172.16.0.1
     network 172.16.0.0 0.0.0.3 area 0
     network 192.168.0.0 0.0.0.63 area 0
     network 192.168.1.0 0.0.0.15 area 0
@@ -179,7 +179,7 @@
     Ip tunnel 172.16.5.1 172.16.4.1 mode gre
     end
     Conf t
-    Router ospf 1
+    Router ospf 2
     Ospf router-id  172.16.0.2
     Network 172.16.0.0 0.0.0.3 area 0
     Network 192.168.1.0 0.0.0.31 area 0
