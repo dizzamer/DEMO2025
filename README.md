@@ -155,8 +155,8 @@
 ## 6. Между офисами HQ и BR необходимо сконфигурировать ip туннель  
   ### o Сведения о туннеле занесите в отчёт  
     Настройка на HQ-RTR:
-    Interface tunnel.1
-    Ip add 172.16.0.1/30
+    Interface tunnel.1  
+    Ip add 172.16.0.1/30  
     Ip mtu 1476
     ip ospf network broadcast
     ip ospf mtu-ignore
