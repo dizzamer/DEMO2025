@@ -112,6 +112,8 @@
     rewrite pop 1  
     connect ip interface te1.100  
     Настройка на HQ-SW:  
+    Перед настройкой линк ens4 в nmtui должен быть в состоянии - отключено
+    Адресации так же не должно быть
     ovs-vsctl add-port ovs0 ens4  
     ovs-vsctl set port ens4 tag=100 trunks=100  
     ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
@@ -125,7 +127,9 @@
     encapsulation dot1q 200  
     rewrite pop 1  
     connect ip interface te1.200  
-    Настройка на HQ-SW:  
+    Настройка на HQ-SW: 
+    Перед настройкой линк ens5 в nmtui должен быть в состоянии - отключено
+    Адресации так же не должно быть
     ovs-vsctl add-port ovs0 ens5  
     ovs-vsctl set port ens5 tag=200 trunks=200  
     ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
@@ -142,6 +146,8 @@
     Int vl999  
     connect port te1 service-instance toSW  
     Настройка на HQ-SW:  
+    Перед настройкой линк ens3 в nmtui должен быть в состоянии - отключено
+    Адресации так же не должно быть
     ovs-vsctl add-br ovs0  
     ovs-vsctl add-port ovs0 ens3  
     ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
@@ -149,10 +155,21 @@
     ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
 **● Основные сведения о настройке коммутатора и выбора реализации разделения на VLAN занесите в отчёт**  
 ## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-SRV:  
-  ● Для подключения используйте порт 2024  
-  ● Разрешите подключения только пользователю sshuser  
-  ● Ограничьте количество попыток входа до двух  
-  ● Настройте баннер «Authorized access only»  
+ ### ● Для подключения используйте порт 2024  
+     Перед настройкой выполните команду setenforce 0, далее переводим selinux в состояние  
+     permissive в файле /etc/selinux/config
+     dnf install openssh - если не установлен
+     systemctl enable --now sshd
+     nano /etc/ssh/sshdconfig
+     Меняем порт на 2024
+ ### ● Разрешите подключения только пользователю sshuser  
+      nano /etc/ssh/sshdconfig
+      AllowUsers sshuser
+ ### ● Ограничьте количество попыток входа до двух  
+      nano /etc/ssh/sshdconfig
+      MaxAuthTries 2
+ ### ● Настройте баннер «Authorized access only»  
+      systemctl restart sshd
 ## 6. Между офисами HQ и BR необходимо сконфигурировать ip туннель  
   ### o Сведения о туннеле занесите в отчёт  
     Настройка на HQ-RTR:
