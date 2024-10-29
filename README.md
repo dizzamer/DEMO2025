@@ -253,14 +253,14 @@
   ● Настройте нужную подсеть  
   ### ● Для офиса HQ в качестве сервера DHCP выступает маршрутизатор HQ-RTR.  
     Настройка производится на EcoRouter HQ-RTR:
-    ip pool dhcpHQ 192.168.0.66-192.168.0.80
+    ip pool dhcpHQ 192.168.1.66-192.168.1.80
     en
     conf t
     dhcp-server 1
     pool dhcpHQ 1
     domain-name au.team.irpo
     mask 255.255.255.240
-    gateway 192.168.0.65
+    gateway 192.168.1.65
     dns 192.168.0.1
     end
     wr mem  
