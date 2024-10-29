@@ -255,6 +255,7 @@
     domain-name au.team.irpo
     mask 255.255.255.240
     gateway 192.168.1.78
+    dns 8.8.8.8
     dns 192.168.0.1
     end
     wr mem  
