@@ -74,6 +74,7 @@
     wr  mem  
     o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR  
     для доступа к сети Интернет:  
+    echo net.ipv4.ip_forward=1 > /etc/sysctl.conf
     dnf install iptables-services –y   
     systemctl enable ––now iptables  
     iptables –t nat –A POSTROUTING –s 172.16.4.0/28 –o ens3 –j MASQUERADE  
