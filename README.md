@@ -200,7 +200,7 @@
     Router ospf 1
     Ospf router-id 172.16.0.2
     Network 172.16.0.0 0.0.0.3 area 0
-    Network 192.168.1.0 0.0.0.31 area 0
+    Network 192.168.2.0 0.0.0.31 area 0
     Passive-interface default
     no passive-interface tunnel.1  
   o На выбор технологии GRE или IP in IP  
@@ -231,7 +231,7 @@
     ip nat pool nat2 192.168.1.79-192.168.1.254  
     ip nat source dynamic inside-to-outside pool nat2 overload 172.16.4.1  
     Настройка производится на EcoRouter BR-RTR: 
-    ip nat pool nat3 192.168.1.2-192.168.1.31  
+    ip nat pool nat3 192.168.2.2-192.168.2.31  
     ip nat source dynamic inside-to-outside pool nat3 overload 172.16.5.1 
 ### ● Все устройства в офисах должны иметь доступ к сети Интернет  
     Настройка производится на EcoRouter HQ-RTR:
