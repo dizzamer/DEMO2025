@@ -343,7 +343,8 @@
      hostnamectl set-hostname hq-srv.au-team.irpo; exec bash  
      Отключение DNS-службы systemd-resolved:  
      sudo nano /etc/systemd/resolved.conf  systemdresolved.png  
-     Установите параметр DNSStubListener в значение no, как показано в примере. Это необходимо, чтобы отключить прослушивание systemd-resolved на порту 53:  
+     Установите параметр DNSStubListener в значение no, как показано в примере. Это необходимо,  
+     чтобы отключить прослушивание systemd-resolved на порту 53:  
      ![systemd resolved](https://github.com/dizzamer/DEMO2025/blob/main/systemdresolved.png)  
      После внесения изменений в файл необходимо перезапустить systemd-resolved и NetworkManager командой:  
      systemctl restart systemd-resolved.service NetworkManager  
