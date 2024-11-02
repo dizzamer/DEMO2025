@@ -342,8 +342,24 @@
      Присваивание серверу доменного имени, если еще не сделали:  
      hostnamectl set-hostname hq-srv.au-team.irpo; exec bash  
      Отключение DNS-службы systemd-resolved:  
-     sudo nano /etc/systemd/resolved.conf  
+     sudo nano /etc/systemd/resolved.conf  systemdresolved.png  
      Установите параметр DNSStubListener в значение no, как показано в примере. Это необходимо, чтобы отключить прослушивание systemd-resolved на порту 53:  
+     ![systemd resolved](https://github.com/dizzamer/DEMO2025/blob/main/systemdresolved.png)  
+     После внесения изменений в файл необходимо перезапустить systemd-resolved и NetworkManager командой:  
+     systemctl restart systemd-resolved.service NetworkManager  
+     Проверьте изменения в настройках, выполните:  
+     cat /etc/resolv.conf  
+     В выводе должен быть указан адрес отличающийся от 127.0.0.53.  
+     Настройка сетевого интерфейса производится через nmtui  
+     Укажите в качестве DNS-сервера IP-адрес создаваемого контроллера домена:  
+     dns=192.168.0.1;  
+     dns-search=hq-srv.au-team.irpo;  
+     Перезагружаем линк через nmtui или systemctl restart NetworkManager.  
+     Проверьте доступные серверы имен, просмотрев файл resolv.conf:  
+     cat /etc/resolv.conf  
+     В выводе должно отобразиться наши dns сервера и домен для поиска. 
+
+
      
 •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 •	Введите в домен машину HQ-CLI  
