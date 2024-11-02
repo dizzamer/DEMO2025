@@ -324,7 +324,7 @@
 
 ## 1.	Настройте доменный контроллер Samba на машине BR-SRV.  
   ### Настройка проивзодится на hq-srv:  
-     setenforce 0  
+     set enforce 0  
      nano /etc/selinux  
      Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive  
      Через nmtui добавить второй dns сервер HQ-SRV 192.168.0.1/26  
@@ -339,7 +339,12 @@
      chown root:named /etc/krb5.conf  
      Откройте файл /etc/krb5.conf:  
      nano /etc/krb5.conf  
-  
+     Присваивание серверу доменного имени, если еще не сделали:  
+     hostnamectl set-hostname hq-srv.au-team.irpo; exec bash  
+     Отключение DNS-службы systemd-resolved:  
+     sudo nano /etc/systemd/resolved.conf  
+     Установите параметр DNSStubListener в значение no, как показано в примере. Это необходимо, чтобы отключить прослушивание systemd-resolved на порту 53:  
+     
 •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 •	Введите в домен машину HQ-CLI  
 •	Пользователи группы hq имеют право аутентифицироваться на клиентском ПК  
