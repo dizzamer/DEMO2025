@@ -165,12 +165,16 @@
      nano /etc/ssh/sshd_config
      Меняем порт на 2024
  ### ● Разрешите подключения только пользователю sshuser  
-      nano /etc/ssh/sshdconfig
+      nano /etc/ssh/sshd_config
       AllowUsers sshuser
  ### ● Ограничьте количество попыток входа до двух  
-      nano /etc/ssh/sshdconfig
+      nano /etc/ssh/sshd_config
       MaxAuthTries 2
  ### ● Настройте баннер «Authorized access only»  
+      echo «Authorized access only» > /etc/ssh/sshd_banner
+      nano /etc/ssh/sshd_config
+      Добавить рядом со строчкой MaxAuthTries 2:  
+      Banner /etc/ssh/sshd_banner
       systemctl restart sshd
 ## 6. Между офисами HQ и BR необходимо сконфигурировать ip туннель  
   ### o Сведения о туннеле занесите в отчёт  
