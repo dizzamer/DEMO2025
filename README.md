@@ -324,6 +324,7 @@
 
 ## 1.	Настройте доменный контроллер Samba на машине BR-SRV.  
   ### Настройка проивзодится на BR-SRV:  
+     ## Предварительная настройка сервера
      setenforce 0  
      nano /etc/selinux  
      Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive  
@@ -343,10 +344,9 @@
      hostnamectl set-hostname hq-srv.au-team.irpo; exec bash  
      Отключение DNS-службы systemd-resolved:  
      sudo nano /etc/systemd/resolved.conf  systemdresolved.png  
-     Установите параметр DNSStubListener в значение no, как показано в примере. Это необходимо,  
-     чтобы отключить прослушивание systemd-resolved на порту 53:  
+     Установите параметр DNSStubListener в значение no, как показано в примере. Это  необходимо, чтобы отключить прослушивание systemd-resolved на порту 53:  
      ![systemd resolved](https://github.com/dizzamer/DEMO2025/blob/main/systemdresolved.png)  
-     После внесения изменений в файл необходимо перезапустить systemd-resolved и NetworkManager командой:  
+     После внесения изменений в файл необходимо перезапустить systemd-resolved и        NetworkManager командой:  
      systemctl restart systemd-resolved.service NetworkManager  
      Проверьте изменения в настройках, выполните:  
      cat /etc/resolv.conf  
@@ -358,10 +358,41 @@
      Перезагружаем линк через nmtui или systemctl restart NetworkManager.  
      Проверьте доступные серверы имен, просмотрев файл resolv.conf:  
      cat /etc/resolv.conf  
-     В выводе должно отобразиться наши dns сервера и домен для поиска. 
-
-
-     
+     В выводе должно отобразиться наши dns сервера и домен для поиска.  
+     ## Создание нового домена под управлением контроллера домена Samba DC:  
+     Создание резервных копий файлов  
+     Переименуйте файл /etc/smb.conf, он будет создан позднее в процессе выполнения команды samba-tool. Наличие данного файла на момент запуска полуавтоматической конфигурации может вызвать ошибку.  
+     cp /etc/samba/smb.conf /etc/samba/smb.conf.back  
+     Создайте резервную копию используемого по умолчанию конфигурационного файла kerberos:  
+     cp /etc/krb5.conf /etc/krb5.conf.back  
+     Настройка конфигурации Kerberos:  
+     ls -l /etc/krb5.conf  
+     Проверьте права на доступ к файлу /etc/krb5.conf:  
+     Пользователем-владельцем файла должен быть root, а группой-владельцем – named. Пример корректного вывода:  
+     -rw-r--r-- 1 root named 104 фев 7 11:05 /etc/krb5.conf  
+     При необходимости смените владельцев:  
+     chown root:named /etc/krb5.conf    
+     Откройте файл /etc/krb5.conf:  
+     nano /etc/krb5.conf  
+     В секции [libdefaults] установите имя домена, используемое по умолчанию:  
+     default_realm = au-team.irpo  
+     Добавьте в секции [realms] и [domain_realm] информацию об именах домена и сервера:  
+     [realms]  
+     SKYNET.MUROM = {  
+       kdc = br-srv.au-team.irpo  
+       admin_server = br-srv.au-team.irpo  
+     }  
+    [domain_realm]  
+       .au-team.irpo = AU-TEAM.IRPO  
+       au-team.irpo = AU-TEAM.IRPO  
+   Откройте файл /etc/krb5.conf.d/crypto-policies:  
+   nano /etc/krb5.conf.d/crypto-policies  
+   и приведите его содержание к следующему виду:  
+   [libdefaults]  
+    default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+    default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+    preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+    Настройка DNS-сервера BIND
 •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 •	Введите в домен машину HQ-CLI  
 •	Пользователи группы hq имеют право аутентифицироваться на клиентском ПК  
