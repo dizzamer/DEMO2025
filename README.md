@@ -535,8 +535,8 @@
    en  
    conf t  
    filter-map policy ipv4 moodle 1  
-   match tcp http 172.16.4.1 192.168.0.2 tcp http 0 ack  
-   set redirect  
+   match 80 172.16.4.1/28 192.168.0.2/26 dscp 0
+   set redirect hq-rtr.moodle.au-team.irpo  
    end  
    wr mem  
    en  
