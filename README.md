@@ -322,9 +322,10 @@
 
 # Модуль № 2:Организация сетевого администрирования операционных систем  
 
-## 1.	Настройте доменный контроллер Samba на машине BR-SRV.  
+## 1.	Настройте доменный контроллер Samba на машине BR-SRV.   
   ### Настройка проивзодится на BR-SRV:  
    ## Предварительная настройка сервера:  
+     (https://redos.red-soft.ru/base/redos-7_3/7_3-administation/7_3-domain-redos/7_3-domain-config/7_3-samba-dns-backend-bind9-dlz/7_3-install-samba-dc-bind/?nocache=1730786816312)
      setenforce 0  
      nano /etc/selinux  
      Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive  
@@ -386,14 +387,14 @@
     [domain_realm]  
        .au-team.irpo = AU-TEAM.IRPO  
        au-team.irpo = AU-TEAM.IRPO  
-   Откройте файл /etc/krb5.conf.d/crypto-policies:  
-   nano /etc/krb5.conf.d/crypto-policies  
-   и приведите его содержание к следующему виду:  
-   [libdefaults]  
-    default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-    default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-    preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-    Настройка DNS-сервера BIND
+    Откройте файл /etc/krb5.conf.d/crypto-policies:  
+    nano /etc/krb5.conf.d/crypto-policies  
+    и приведите его содержание к следующему виду:  
+    [libdefaults]  
+     default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+     default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+     preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+     Настройка DNS-сервера BIND
 •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 •	Введите в домен машину HQ-CLI  
 •	Пользователи группы hq имеют право аутентифицироваться на клиентском ПК  
