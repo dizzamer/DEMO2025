@@ -306,8 +306,11 @@
     Проверить зоны можно командой named-checkconf -z  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
     nano /etc/nsswitch.conf  
+    /etc/nsswitch.conf – это файл конфигурации Linux, который определяет, как система должна переключаться между различными поставщиками услуг имен.  
     Меняем hosts: files myhostname resolve [!UNAVAIL=return] dns на:    
-    ![nsswitch](https://github.com/dizzamer/DEMO2025/blob/main/nsswitch.jpg)    
+    ![nsswitch](https://github.com/dizzamer/DEMO2025/blob/main/nsswitch.jpg)   
+    Приведенная выше запись определяет порядок разрешения любого доменного имени.  
+    Сначала система проверит отображение домена в файлах (/etc/hosts), если будет найдена соответствующая запись, она будет использовать ее.  
     nano /etc/host.conf  
     В этом файле определяется, как в системе будут разрешаться имена компьютеров.  
     В нем должны содержаться две строки:  
