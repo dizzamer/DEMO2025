@@ -102,6 +102,25 @@
     role admin  
     o При настройке ОС на базе Linux, запускать sudo без дополнительной аутентификации  
 ## 4. Настройте на интерфейсе HQ-RTR в сторону офиса HQ виртуальный коммутатор:  
+ ### ● Создайте подсеть управления с ID VLAN 999  
+    Настройка на HQ-RTR:  
+    int vl999  
+    ip add 192.168.0.81/29  
+    description toSW  
+    port te1  
+    Service-instance toSW  
+    Encapsulation untagged  
+    ex  
+    Int vl999  
+    connect port te1 service-instance toSW  
+    Настройка на HQ-SW:  
+    Перед настройкой линк ens3 в nmtui должен быть в состоянии - отключено
+    Адресации так же не должно быть
+    ovs-vsctl add-br ovs0  
+    ovs-vsctl add-port ovs0 ens3  
+    ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
+    ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set Interface ovs0-vlan999 type=internal  
+    ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
  ### ● Сервер HQ-SRV должен находиться в ID VLAN 100  
     Настройка на HQ-RTR:  
     int te1.100  
@@ -114,6 +133,7 @@
     Настройка на HQ-SW:  
     Перед настройкой линк ens4 в nmtui должен быть в состоянии - отключено
     Адресации так же не должно быть
+    Так как при настройке на HQ-SW бридж ovs0 уже создан, его создавать не нужно
     ovs-vsctl add-port ovs0 ens4  
     ovs-vsctl set port ens4 tag=100 trunks=100  
     ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
@@ -134,25 +154,6 @@
     ovs-vsctl set port ens5 tag=200 trunks=200  
     ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
     ifconfig ovs0-vlan200 up  
- ### ● Создайте подсеть управления с ID VLAN 999  
-    Настройка на HQ-RTR:  
-    int vl999  
-    ip add 192.168.0.81/29  
-    description toSW  
-    port te1  
-    Service-instance toSW  
-    Encapsulation untagged  
-    ex  
-    Int vl999  
-    connect port te1 service-instance toSW  
-    Настройка на HQ-SW:  
-    Перед настройкой линк ens3 в nmtui должен быть в состоянии - отключено
-    Адресации так же не должно быть
-    ovs-vsctl add-br ovs0  
-    ovs-vsctl add-port ovs0 ens3  
-    ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
-    ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set Interface ovs0-vlan999 type=internal  
-    ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
 **● Основные сведения о настройке коммутатора и выбора реализации разделения на VLAN занесите в отчёт**  
 ## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-SRV:  
  ### ● Для подключения используйте порт 2024  
