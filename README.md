@@ -162,7 +162,7 @@
      permissive в файле /etc/selinux/config
      dnf install openssh - если не установлен
      systemctl enable --now sshd
-     nano /etc/ssh/sshdconfig
+     nano /etc/ssh/sshd_config
      Меняем порт на 2024
  ### ● Разрешите подключения только пользователю sshuser  
       nano /etc/ssh/sshdconfig
