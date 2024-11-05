@@ -275,7 +275,7 @@
     conf t
     dhcp-server 1
     pool dhcpHQ 1
-    domain-name au.team.irpo
+    domain-name au-team.irpo
     mask 255.255.255.240  
     gateway 192.168.1.64  
     dns 192.168.0.1  
