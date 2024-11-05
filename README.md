@@ -294,8 +294,8 @@
     ![named первая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)  
     ![named вторая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns2.png)  
     mkdir /var/named/master  
-    chown -R root:named /var/named/master  
-    chmod 0640 /var/named/master/*  
+    chown -R named:named /var/named/master  
+    chmod 750 /var/named/master/*  
     nano /var/named/master/au.team  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/auteamzone.png)  
     nano /var/named/master/0.168.192.zone    
@@ -352,10 +352,10 @@
      systemctl restart systemd-resolved.service NetworkManager  
      Проверьте изменения в настройках, выполните:  
      cat /etc/resolv.conf  
-     В выводе должен быть указан адрес отличающийся от 127.0.0.53.  
+     В выводе должен быть указан адрес отличающийся от 127.0.0.53  
      Настройка сетевого интерфейса производится через nmtui  
      Укажите в качестве DNS-сервера IP-адрес создаваемого контроллера домена:  
-     dns=192.168.0.1;  
+     dns=192.168.1.2;  
      dns-search=hq-srv.au-team.irpo;  
      Перезагружаем линк через nmtui или systemctl restart NetworkManager.  
      Проверьте доступные серверы имен, просмотрев файл resolv.conf:  
@@ -394,7 +394,17 @@
      default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
      default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
      preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-     Настройка DNS-сервера BIND
+   ## Настройка DNS-сервера BIND
+     Откройте файл /etc/named.conf:  
+     nano /etc/named.conf  
+     и внесите в блок options { следующие значения параметров (при необходимости, добавив отсутствующие параметры):  
+     listen-on port 53 { 192.168.1.2; };
+     allow-query { any; };
+     dnssec-validation no;
+     tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";
+     minimal-responses yes;
+     forwarders { 8.8.8.8; };
+    
 •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 •	Введите в домен машину HQ-CLI  
 •	Пользователи группы hq имеют право аутентифицироваться на клиентском ПК  
