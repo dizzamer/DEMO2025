@@ -172,9 +172,8 @@
       MaxAuthTries 2
  ### ● Настройте баннер «Authorized access only»  
       echo «Authorized access only» > /etc/ssh/sshd_banner
-      nano /etc/ssh/sshd_config
-      Добавить рядом со строчкой MaxAuthTries 2:  
-      Banner /etc/ssh/sshd_banner
+      nano /etc/ssh/sshd_config 
+      echo Banner /etc/ssh/sshd_banner >> /etc/ssh/sshd_config
       systemctl restart sshd
 ## 6. Между офисами HQ и BR необходимо сконфигурировать ip туннель  
   ### o Сведения о туннеле занесите в отчёт  
