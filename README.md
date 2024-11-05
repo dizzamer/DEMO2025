@@ -453,32 +453,32 @@
 ### •	Создайте в домашней директории пользователя файл wiki.yml для приложения MediaWiki.  
      touch /home/student/wiki.yml  
      nano /home/student/wiki.yml  
-  services:
-  MediaWiki:
-    container_name: wiki
-    image: mediawiki
-    restart: always
-    ports: 
-      - 80:8080
-    links:
-      - database
+      services:
+      MediaWiki:
+        container_name: wiki
+        image: mediawiki
+        restart: always
+        ports: 
+          - 80:8080
+        links:
+          - database
+        volumes:
+          - images:/var/www/html/images
+          # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      database:
+        container_name: mariadb
+        image: mariadb
+        environment:
+          MYSQL_DATABASE: mediawiki
+          MYSQL_USER: wiki
+          MYSQL_PASSWORD: WikiP@ssw0rd
+          MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+        volumes:
+          - dbvolume:/var/lib/mysql
     volumes:
-      - images:/var/www/html/images
-      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
-  database:
-    container_name: mariadb
-    image: mariadb
-    environment:
-      MYSQL_DATABASE: mediawiki
-      MYSQL_USER: wiki
-      MYSQL_PASSWORD: WikiP@ssw0rd
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-    volumes:
-      - dbvolume:/var/lib/mysql
-volumes:
-  dbvolume:
-      external: true
-  images:
+      dbvolume:
+          external: true
+      images:
   docker compose -f wiki.yml up -d
 •	Средствами docker compose должен создаваться стек контейнеров с приложением MediaWiki и базой данных.  
 •	Используйте два сервиса  
