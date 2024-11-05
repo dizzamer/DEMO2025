@@ -150,6 +150,7 @@
     Настройка на HQ-SW: 
     Перед настройкой линк ens5 в nmtui должен быть в состоянии - отключено
     Адресации так же не должно быть
+    Так как при настройке на HQ-SW бридж ovs0 уже создан, его создавать не нужно
     ovs-vsctl add-port ovs0 ens5  
     ovs-vsctl set port ens5 tag=200 trunks=200  
     ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
