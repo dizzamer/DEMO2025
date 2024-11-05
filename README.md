@@ -348,7 +348,7 @@
      Установите параметр DNSStubListener в значение no, как показано в примере.  
      Это  необходимо, чтобы отключить прослушивание systemd-resolved на порту 53:  
      ![systemd resolved](https://github.com/dizzamer/DEMO2025/blob/main/systemdresolved.png)  
-     После внесения изменений в файл необходимо перезапустить systemd-resolved и        NetworkManager командой:  
+     После внесения изменений в файл необходимо перезапустить systemd-resolved и NetworkManager командой:  
      systemctl restart systemd-resolved.service NetworkManager  
      Проверьте изменения в настройках, выполните:  
      cat /etc/resolv.conf  
