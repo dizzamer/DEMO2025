@@ -535,16 +535,16 @@
    en  
    conf t  
    filter-map policy ipv4 moodle 1  
-   match tcp http 172.16.4.1 192.168.0.2 tcp http 0 ack
-   set redirect 
-   end
-   wr mem
-   en
-   conf t
-   redirect-url SITEREDIRECT
-   url hq-rtr.moodle.au-team.irpo
-   end
-   wr mem
+   match tcp http 172.16.4.1 192.168.0.2 tcp http 0 ack  
+   set redirect  
+   end  
+   wr mem  
+   en  
+   conf t  
+   redirect-url SITEREDIRECT  
+   url hq-rtr.moodle.au-team.irpo  
+   end  
+   wr mem  
 •	При обращении к HQ-RTR по доменному имени wiki. au-team.irpo клиента должно перенаправлять на BR-SRV на порт, на сервис mediwiki  
 ## 9.	Удобным способом установите приложение Яндекс Браузер для организаций на HQ-CLI  
 •	Установку браузера отметьте в отчёте  
