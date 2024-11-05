@@ -271,11 +271,10 @@
     dhcp-server 1
     pool dhcpHQ 1
     domain-name au.team.irpo
-    mask 255.255.255.240
-    gateway 192.168.1.64
-    (dns 8.8.8.8)
-    dns 192.168.0.1
-    end
+    mask 255.255.255.240  
+    gateway 192.168.1.64  
+    dns 192.168.0.1  
+    end  
     wr mem  
   ###  ● Клиентом является машина HQ-CLI.  
       interface te1.200
