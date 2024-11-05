@@ -329,7 +329,7 @@
      setenforce 0  
      nano /etc/selinux  
      Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive  
-     Через nmtui добавить второй dns сервер HQ-SRV 192.168.0.1/26  
+     Через nmtui добавить второй dns сервер 192.168.0.1/26  
      Впишите домен поиска au-team.irpo 
      Перезапускаем линк в nmtui  
      dnf install samba* krb5* bind -y  
