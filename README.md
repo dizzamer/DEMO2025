@@ -305,7 +305,7 @@
     systemctl restart named  
     Проверить зоны можно командой named-checkconf -z  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
-    nano /etc/nsswitch.conf
+    nano /etc/nsswitch.conf  
     Меняем hosts: files myhostname resolve [!UNAVAIL=return] dns на:   
     ![nsswitch](https://github.com/dizzamer/DEMO2025/blob/main/nsswitch.jpg)  
   ● Сервер должен обеспечивать разрешение имён в сетевые адреса устройств и обратно в соответствии с таблицей 2  
