@@ -36,8 +36,8 @@
  | HQ-SW            | 192.168.0.82/29          | ens3        | HQ_NET    |              |
  |                  | -                        | ens4        | SRV_NET   |              |
  |                  | -                        | ens5        | CLI_NET   |              |
- | HQ-SRV           | 192.168.0.1/26           | ens3        | SRV_NET   | 192.168.0.62 |
- | HQ-CLI           | 192.168.1.65/28(DHCP)    | ens3        | CLI_NET   | 192.168.1.64 |
+ | HQ-SRV           | 192.168.0.2/26           | ens3        | SRV_NET   | 192.168.0.62 |
+ | HQ-CLI           | 192.168.1.65/28(DHCP)    | ens3        | CLI_NET   | 192.168.1.78 |
  | BR-RTR           | 172.16.5.1/28            | te0         | ISP_BR    | 172.16.5.14  |
  |                  | 192.168.1.1/27           | te1         | BR_NET    |              |
  |                  | 172.16.0.2/30            | GRE         | TUN       |              |
@@ -262,9 +262,9 @@
     int SRV
     ip nat inside
     ex  
-    Настройка производится на EcoRouter HQ-SRV:
+    Настройка производится на HQ-SRV:
     В nmtui прописывеем шлюз - 192.168.0.62/26  
-    Настройка производится на EcoRouter BR-SRV:  
+    Настройка производится на BR-SRV:  
     В nmtui прописывет шлюз - 192.168.2.1/27
 ## 9. Настройка протокола динамической конфигурации хостов.  
   ● Настройте нужную подсеть  
@@ -532,7 +532,19 @@
 ## 8.	Настройте веб-сервер nginx как обратный прокси-сервер на HQ-RTR  
 ### •	При обращении к HQ-RTR по доменному имени moodle.au-team.irpo клиента должно перенаправлять на HQ-SRV на стандартный порт, на сервис moodle  
    Настройка производится на EcoRouter HQ-RTR:  
-   
+   en  
+   conf t  
+   filter-map policy ipv4 moodle 1  
+   match tcp http 172.16.4.1 192.168.0.2 tcp http 0 ack
+   set redirect 
+   end
+   wr mem
+   en
+   conf t
+   redirect-url SITEREDIRECT
+   url hq-rtr.moodle.au-team.irpo
+   end
+   wr mem
 •	При обращении к HQ-RTR по доменному имени wiki. au-team.irpo клиента должно перенаправлять на BR-SRV на порт, на сервис mediwiki  
 ## 9.	Удобным способом установите приложение Яндекс Браузер для организаций на HQ-CLI  
 •	Установку браузера отметьте в отчёте  
