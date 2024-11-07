@@ -300,6 +300,7 @@
     ![named вторая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns2.png)  
     mkdir /var/named/master  
     chown -R named:named /var/named/master  
+    touch /var/named/master/au.team  
     chmod 750 /var/named/*  
     chmod 750 /var/named/master/*  
     nano /var/named/master/au.team  
