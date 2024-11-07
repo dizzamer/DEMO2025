@@ -393,7 +393,7 @@
      default_realm = au-team.irpo  
      Добавьте в секции [realms] и [domain_realm] информацию об именах домена и сервера:  
      [realms]  
-     SKYNET.MUROM = {  
+     AU-TEAM.IRPO = {  
        kdc = br-srv.au-team.irpo  
        admin_server = br-srv.au-team.irpo  
      }  
