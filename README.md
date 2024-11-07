@@ -304,7 +304,7 @@
     nano /var/named/master/au.team  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/auteamzone.png)  
     nano /var/named/master/0.168.192.zone    
-    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192zone.png) 
+    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192.zone.jpg) 
     systemctl restart named  
     Проверить зоны можно командой named-checkconf -z  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
