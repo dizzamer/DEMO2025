@@ -407,6 +407,10 @@
      default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
      default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
      preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+   ## Первоначальное полуавтоматическое конфигурирование сервера с помощью утилиты samba-tool 
+     Файла /etc/samba/smb.conf быть не должно, он сам создаст.
+     rm /etc/samba/smb.conf
+     samba-tool domain provision --use-rfc2307 --interactive
    ## Настройка DNS-сервера BIND
      Откройте файл /etc/named.conf:  
      nano /etc/named.conf  
