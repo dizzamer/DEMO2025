@@ -293,6 +293,7 @@
   ● Основной DNS-сервер реализован на HQ-SRV.  
     dnf install bind -y  
     systemctl enable --now named  
+    chattr +i  
     cp /etc/named/named.conf /etc/named/named.conf.backup  
     nano /etc/named.conf  
     ![named первая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)  
