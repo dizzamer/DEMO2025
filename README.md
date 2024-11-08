@@ -413,22 +413,22 @@
      default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
      default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
      preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-   ## Первоначальное полуавтоматическое конфигурирование сервера с помощью утилиты samba-tool 
-     Файла /etc/samba/smb.conf быть не должно, он сам создаст.
-     rm /etc/samba/smb.conf
-     samba-tool domain provision --use-rfc2307 --interactive
+
    ## Настройка DNS-сервера BIND
-     Откройте файл /etc/named.conf:  
-     nano /etc/named.conf  
-     и внесите в блок options { следующие значения параметров (при необходимости, добавив отсутствующие параметры):  
-     listen-on port 53 { 192.168.1.2; };
-     allow-query { any; };
-     dnssec-validation no;
-     tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";
-     minimal-responses yes;
-     forwarders { 8.8.8.8; };
-    
-•	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
+     Откройте файл /etc/named.conf:    
+     nano /etc/named.conf    
+     и внесите в блок options { следующие значения параметров (при необходимости, добавив отсутствующие параметры):    
+     listen-on port 53 { 192.168.1.2; };  
+     allow-query { any; };  
+     dnssec-validation no;  
+     tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";  
+     minimal-responses yes;  
+     forwarders { 8.8.8.8; };  
+   ## Первоначальное полуавтоматическое конфигурирование сервера с помощью утилиты samba-tool  
+     Файла /etc/samba/smb.conf быть не должно, он сам создаст.  
+     rm /etc/samba/smb.conf  
+     samba-tool domain provision --use-rfc2307 --interactive    
+•	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей   
 ### Настройка проивзодится на BR-SRV:    
  ## Управление пользователями и группами
    Список пользователей:  
