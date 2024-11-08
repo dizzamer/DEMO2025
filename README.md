@@ -344,7 +344,6 @@
 ## 1.	Настройте доменный контроллер Samba на машине BR-SRV.   
   ### Настройка проивзодится на BR-SRV:  
    ## Предварительная настройка сервера:  
-     (https://redos.red-soft.ru/base/redos-7_3/7_3-administation/7_3-domain-redos/7_3-domain-config/7_3-samba-dns-backend-bind9-dlz/7_3-install-samba-dc-bind/?nocache=1730786816312)
      setenforce 0  
      nano /etc/selinux  
      Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive  
@@ -427,7 +426,17 @@
    ## Первоначальное полуавтоматическое конфигурирование сервера с помощью утилиты samba-tool  
      Файла /etc/samba/smb.conf быть не должно, он сам создаст.  
      rm /etc/samba/smb.conf  
-     samba-tool domain provision --use-rfc2307 --interactive    
+     samba-tool domain provision --use-rfc2307 --interactive  
+     Описание некоторых опций (параметров) этой команды:
+     use-rfc2307 – параметр добавляет POSIX атрибуты (UID / GID) на схеме AD. 
+     Он понадобится при аутентификации клиентов Linux, BSD, или OS X (в том числе, на локальной машине), в дополнение к Microsoft Windows;
+     
+     interactive – запуск в интерактивном режиме;  
+     realm – указывает на полное DNS-имя домена, которое настроено в /etc/hosts, в верхнем регистре (в нашем случае это AU-TEAM.IRPO);  
+     Domain – краткое имя домена NetBIOS (в примере – IRPO);  
+     Server Rules – роль сервера (DC – domain controller);  
+     DNS backend – DNS-сервер. Возможные значения – SAMBA_INTERNAL (внутренний DNS сервера), BIND9_FLATFILE, BIND9_DLZ, NONE(в нашем случае это NONE);  
+     DNS forwarder IP address – данный параметр позволяет указать IP-адрес DNS-сервера, на который будут перенаправлены DNS-запросы, в том случае, когда сервер не сможет их разрешить.  
    ## Запуск и проверка работоспособности службы samba  
      Запустите и добавьте в автозагрузку службы samba и named:  
      systemctl enable samba named --now  
@@ -481,9 +490,38 @@
 •	На HQ-RTR настройте сервер chrony, выберите стратум 5  
 •	В качестве клиентов настройте HQ-SRV, HQ-CLI, BR-RTR, BR-SRV  
 ## 4.	Сконфигурируйте ansible на сервере BR-SRV  
-•	Сформируйте файл инвентаря, в инвентарь должны входить HQ-SRV, HQ-CLI, HQ-RTR и BR-RTR  
-•	Рабочий каталог ansible должен располагаться в /etc/ansible  
-•	Все указанные машины должны без предупреждений и ошибок отвечать pong на команду ping в ansible посланную с BR-SRV  
+  ### •	Сформируйте файл инвентаря, в инвентарь должны входить HQ-SRV, HQ-CLI, HQ-RTR и BR-RTR  
+      dnf install ansible -y  
+      1) В файле /etc/ansible/hosts.yml прописать все хосты, на которые будет распространяться конфигурация.  
+      Хосты можно разделить по группам, а так же, если у вас есть домен, то автоматически экспортировать список из домена.  
+      Можно прописывать как ip адреса так и имена хостов, если они резолвятся DNS ом в сети.  
+      nano /etc/ansible/inventory.yml  
+       clients:  
+         hosts:  
+           hq-cli.au-team.irpo:  
+       servers:  
+         hosts:  
+           hq-srv.au-team.irpo:  
+       routers:  
+         hosts:  
+           hq-rtr.au-team.irpo:  
+           br-rtr.au-team.irpo:  
+           
+        2) Подключение к хостам осуществляется по протоколу ssh с помощью rsa ключей.    
+        Сгенерировать серверный ключ можно командой ниже. При её выполнении везде нажмите Enter.    
+        ssh-keygen -C "$(whoami)@$(hostname)-$(date -I)"  
+        
+        3) Далее нужно распространить ключ на все подключенные хосты.  
+        Распространить ключи на хосты можно командой:  
+        ssh-copy-id root@server  
+        где:  
+        root - это пользователь, от имени которого будут выполняться плейбуки;  
+        server - IP-адрес хоста.  
+ •	Рабочий каталог ansible должен располагаться в /etc/ansible  
+   ### •	Все указанные машины должны без предупреждений и ошибок отвечать pong на команду ping в ansible посланную с BR-SRV  
+          Пингуем удаленные хосты с помощью Ansible:  
+           ansible test -m ping  
+           В результате под каждым хостом должно быть написано "ping": "pong".  
 ## 5.	Развертывание приложений в Docker на сервере BR-SRV.  
 ### •	Создайте в домашней директории пользователя файл wiki.yml для приложения MediaWiki.  
      Развертывание производится на сервере BR-SRV:   
@@ -546,21 +584,21 @@
 •	На главной странице должен отражаться номер рабочего места в виде арабской цифры, других подписей делать не надо  
 •	Основные параметры отметьте в отчёте  
 ## 8.	Настройте веб-сервер nginx как обратный прокси-сервер на HQ-RTR  
-### •	При обращении к HQ-RTR по доменному имени moodle.au-team.irpo клиента должно перенаправлять на HQ-SRV на стандартный порт, на сервис moodle  
-   Настройка производится на EcoRouter HQ-RTR:  
-   en  
-   conf t  
-   filter-map policy ipv4 moodle 1  
-   match 80 172.16.4.1/28 192.168.0.2/26 dscp 0
-   set redirect hq-rtr.moodle.au-team.irpo  
-   end  
-   wr mem  
-   en  
-   conf t  
-   redirect-url SITEREDIRECT  
-   url hq-rtr.moodle.au-team.irpo  
-   end  
-   wr mem  
+  ### •	При обращении к HQ-RTR по доменному имени moodle.au-team.irpo клиента должно перенаправлять на HQ-SRV на стандартный порт, на сервис moodle  
+     Настройка производится на EcoRouter HQ-RTR:  
+     en  
+     conf t  
+     filter-map policy ipv4 moodle 1  
+     match 80 172.16.4.1/28 192.168.0.2/26 dscp 0
+     set redirect hq-rtr.moodle.au-team.irpo  
+     end  
+     wr mem  
+     en  
+     conf t  
+     redirect-url SITEREDIRECT  
+     url hq-rtr.moodle.au-team.irpo  
+     end  
+     wr mem  
 •	При обращении к HQ-RTR по доменному имени wiki. au-team.irpo клиента должно перенаправлять на BR-SRV на порт, на сервис mediwiki  
 ## 9.	Удобным способом установите приложение Яндекс Браузер для организаций на HQ-CLI  
 •	Установку браузера отметьте в отчёте  
