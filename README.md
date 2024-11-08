@@ -435,7 +435,7 @@
      realm – указывает на полное DNS-имя домена, которое настроено в /etc/hosts, в верхнем регистре (в нашем случае это AU-TEAM.IRPO);  
      Domain – краткое имя домена NetBIOS (в примере – IRPO);  
      Server Rules – роль сервера (DC – domain controller);  
-     DNS backend – DNS-сервер. Возможные значения – SAMBA_INTERNAL (внутренний DNS сервера), BIND9_FLATFILE, BIND9_DLZ, NONE(в нашем случае это NONE);  
+     DNS backend – DNS-сервер. Возможные значения – SAMBA_INTERNAL (внутренний DNS сервера), BIND9_FLATFILE, BIND9_DLZ, NONE(в нашем случае ничего не ставим);  
      DNS forwarder IP address – данный параметр позволяет указать IP-адрес DNS-сервера, на который будут перенаправлены DNS-запросы, в том случае, когда сервер не сможет их разрешить.  
    ## Запуск и проверка работоспособности службы samba  
      Запустите и добавьте в автозагрузку службы samba и named:  
