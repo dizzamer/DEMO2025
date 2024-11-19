@@ -294,17 +294,17 @@
     chattr -f +i /etc/resolv.conf  
     mv /etc/named/named.conf /etc/named/named.conf.backup  
     nano /etc/named.conf  
-    ![named первая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)  
-    ![named вторая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns2.png)  
+    ![named первая часть](https://github.com/dizzamer/DEMO2025/blob/main/)  
+    ![named вторая часть](https://github.com/dizzamer/DEMO2025/blob/main/)  
     mkdir /var/named/master  
     chown -R named:named /var/named/master  
     touch /var/named/master/au.team  
     chmod 750 /var/named/*  
     chmod 750 /var/named/master/*  
     nano /var/named/master/au-team  
-    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/au-team.png)  
+    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/)  
     nano /var/named/master/0.168.192.zone    
-    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192zone.png) 
+    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/sd) 
     systemctl restart named  
     Проверить зоны можно командой named-checkconf -z  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
