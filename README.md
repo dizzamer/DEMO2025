@@ -39,9 +39,9 @@
  | HQ-SRV           | 192.168.0.2/26           | ens3        | SRV_NET   | 192.168.0.62 |
  | HQ-CLI           | 192.168.1.65/28(DHCP)    | ens3        | CLI_NET   | 192.168.1.78 |
  | BR-RTR           | 172.16.5.1/28            | te0         | ISP_BR    | 172.16.5.14  |
- |                  | 192.168.1.1/27           | te1         | BR_NET    |              |
+ |                  | 192.168.2.1/27           | te1         | BR_NET    |              |
  |                  | 172.16.0.2/30            | GRE         | TUN       |              |
- | BR-SRV           | 192.168.1.2/27           | ens3        | BR_NET    | 192.168.1.1  |
+ | BR-SRV           | 192.168.2.2/27           | ens3        | BR_NET    | 192.168.1.1  |
 
 ## 2. Настройка ISP
  ### ● Настройте адресацию на интерфейсах:  
@@ -205,7 +205,7 @@
     Router ospf 1
     Ospf router-id 172.16.0.2
     Network 172.16.0.0 0.0.0.3 area 0
-    Network 192.168.1.0 0.0.0.31 area 0
+    Network 192.168.2.0 0.0.0.31 area 0
     Passive-interface default
     no passive-interface tunnel.1  
   o На выбор технологии GRE или IP in IP  
@@ -231,13 +231,11 @@
 ## 8. Настройка динамической трансляции адресов.  
  ### ● Настройте динамическую трансляцию адресов для обоих офисов.  
     Настройка производится на EcoRouter HQ-RTR: 
-    ip nat pool nat1 192.168.0.1-192.168.0.254  
-    ip nat source dynamic inside-to-outside pool nat1 overload 172.16.4.1  
-    ip nat pool nat2 192.168.1.65-192.168.1.79  
-    ip nat source dynamic inside-to-outside pool nat2 overload 172.16.4.1  
+    ip nat pool nat1 192.168.0.1-192.168.0.254, 192.168.1.65-192.168.1.79 
+    ip nat source dynamic inside-to-outside pool nat1 overload interface ISP 
     Настройка производится на EcoRouter BR-RTR: 
-    ip nat pool nat3 192.168.2.2-192.168.2.31  
-    ip nat source dynamic inside-to-outside pool nat3 overload 172.16.5.1 
+    ip nat pool nat2 192.168.2.2-192.168.2.31  
+    ip nat source dynamic inside-to-outside pool nat2 overload interface ISP 
 ### ● Все устройства в офисах должны иметь доступ к сети Интернет  
     Настройка производится на EcoRouter HQ-RTR:
     en
