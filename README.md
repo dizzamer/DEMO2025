@@ -291,7 +291,7 @@
   ● Основной DNS-сервер реализован на HQ-SRV.  
     dnf install bind -y  
     systemctl enable --now named  
-    chattr -f +i /etc/resolv.conf
+    chattr -f +i /etc/resolv.conf  
     mv /etc/named/named.conf /etc/named/named.conf.backup  
     nano /etc/named.conf  
     ![named первая часть](https://github.com/dizzamer/DEMO2025/blob/main/dns.png)  
@@ -301,8 +301,8 @@
     touch /var/named/master/au.team  
     chmod 750 /var/named/*  
     chmod 750 /var/named/master/*  
-    nano /var/named/master/au.team  
-    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/auteamzone.png)  
+    nano /var/named/master/au-team  
+    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/au-team.png)  
     nano /var/named/master/0.168.192.zone    
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192.zone.jpg) 
     systemctl restart named  
@@ -316,7 +316,7 @@
     Сначала система проверит отображение домена в файлах (/etc/hosts), если будет найдена соответствующая запись, она будет использовать ее.  
      Для полной работоспособности на HQ-CLI нужно установить в качестве dns севрера HQ-SRV:  
      nano /etc/resolv.conf на всех устройствах должен иметь следюущий вид:  
-     ![resolvconf](https://github.com/dizzamer/DEMO2025/blob/main/resolv.conf.png)
+     ![resolvconf](https://github.com/dizzamer/DEMO2025/blob/main/resolv.conf.png)  
      resolvctl dns ens3 192.168.0.2  
      Для полной работоспособности на HQ-RTR нужно установить в качестве dns севрера HQ-SRV:  
      Удаляем ns-ы, если есть командой no ip name-server 8.8.8.8  
