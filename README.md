@@ -81,6 +81,8 @@
     iptables –t nat –A POSTROUTING –s 172.16.5.0/28 –o ens3 –j MASQUERADE  
     iptables-save > /etc/sysconfig/iptables  
     systemctl restart iptables  
+    nano /etc/sysconfig/iptables - не должно быть ничего лишнего.  
+    в случае если там есть то, что вы не добавляли - удалить  
     iptables –L –t nat - должны высветится в Chain POSTROUTING две настроенные подсети.  
 ## 3. Создание локальных учетных записей
  ### ● Создайте пользователя sshuser на серверах HQ-SRV и BR-SRV  
