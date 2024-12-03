@@ -231,11 +231,13 @@
 ## 8. Настройка динамической трансляции адресов.  
  ### ● Настройте динамическую трансляцию адресов для обоих офисов.  
     Настройка производится на EcoRouter HQ-RTR: 
-    ip nat pool nat1 192.168.0.1-192.168.0.254, 192.168.1.65-192.168.1.79 
+    ip nat pool nat1 192.168.0.1-192.168.0.254  
     ip nat source dynamic inside-to-outside pool nat1 overload interface ISP 
+    ip nat pool nat2 192.168.1.65-192.168.1.79  
+    ip nat source dynamic inside-to-outside pool nat2 overload interface ISP   
     Настройка производится на EcoRouter BR-RTR: 
-    ip nat pool nat2 192.168.2.2-192.168.2.31  
-    ip nat source dynamic inside-to-outside pool nat2 overload interface ISP 
+    ip nat pool nat3 192.168.2.2-192.168.2.31  
+    ip nat source dynamic inside-to-outside pool nat3 overload interface ISP 
 ### ● Все устройства в офисах должны иметь доступ к сети Интернет  
     Настройка производится на EcoRouter HQ-RTR:
     en
