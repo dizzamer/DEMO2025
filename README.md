@@ -139,7 +139,7 @@
     ovs-vsctl add-port ovs0 ens4  
     ovs-vsctl set port ens4 tag=100 trunks=100  
     ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
-    ifconfig ovs0-vlan100 up  
+    ifconfig ovs0-vlan100 inet up  
  ### ● Клиент HQ-CLI в ID VLAN 200  
     Настройка на HQ-RTR:  
     int te1.200  
@@ -156,7 +156,7 @@
     ovs-vsctl add-port ovs0 ens5  
     ovs-vsctl set port ens5 tag=200 trunks=200  
     ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
-    ifconfig ovs0-vlan200 up  
+    ifconfig ovs0-vlan200 inet up  
 **● Основные сведения о настройке коммутатора и выбора реализации разделения на VLAN занесите в отчёт**  
 ## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-SRV:  
  ### ● Для подключения используйте порт 2024  
