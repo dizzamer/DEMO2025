@@ -306,7 +306,7 @@
     chmod 750 /var/named/master/*  
     nano /var/named/master/au-team  
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/au-team.png)  
-    nano /var/named/master/0.168.192.zone    
+    nano /var/named/master/168.192.zone    
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192zone.png) 
     systemctl restart named  
     Проверить зоны можно командой named-checkconf -z  
