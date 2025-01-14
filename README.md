@@ -122,7 +122,7 @@
     ovs-vsctl add-br ovs0  
     ovs-vsctl add-port ovs0 ens3  
     ovs-vsctl set port ens3 vlan_mode=native-untagged tag=999 trunks=999,100,200  
-    ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set Interface ovs0-vlan999 type=internal  
+    ovs-vsctl add-port ovs0 ovs0-vlan999 tag=999 -- set interface ovs0-vlan999 type=internal  
     ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
  ### ● Сервер HQ-SRV должен находиться в ID VLAN 100  
     Настройка на HQ-RTR:  
@@ -141,7 +141,7 @@
     Так как при настройке на HQ-SW бридж ovs0 уже создан, его создавать не нужно
     ovs-vsctl add-port ovs0 ens4  
     ovs-vsctl set port ens4 tag=100 trunks=100  
-    ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set Interface ovs0-vlan100 type=internal  
+    ovs-vsctl add-port ovs0 ovs0-vlan100 tag=100 -- set interface ovs0-vlan100 type=internal  
     ifconfig ovs0-vlan100 inet up  
  ### ● Клиент HQ-CLI в ID VLAN 200  
     Настройка на HQ-RTR:  
@@ -151,7 +151,7 @@
     rewrite pop 1  
     int te1.200  
     ip add 192.168.1.78/28  
-    connect ip interface te1.200  
+    connect port te1 service-instance te1.200 
     end  
     wr mem  
     Настройка на HQ-SW: 
@@ -160,7 +160,7 @@
     Так как при настройке на HQ-SW бридж ovs0 уже создан, его создавать не нужно
     ovs-vsctl add-port ovs0 ens5  
     ovs-vsctl set port ens5 tag=200 trunks=200  
-    ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set Interface ovs0-vlan200 type=internal  
+    ovs-vsctl add-port ovs0 ovs0-vlan200 tag=200 -- set interface ovs0-vlan200 type=internal  
     ifconfig ovs0-vlan200 inet up  
 **● Основные сведения о настройке коммутатора и выбора реализации разделения на VLAN занесите в отчёт**  
 ## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-SRV:  
