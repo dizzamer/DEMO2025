@@ -54,23 +54,23 @@
     Настройка производится на EcoRouter:  
     en  
     conf t  
-    int ISP  
-    ip add 172.16.4.1/28  
     port te0  
     service-instance toISP  
     encapsulation untagged  
-    connect ip interface ISP  
+    int ISP  
+    ip add 172.16.4.1/28  
+    connect port te0 service-instance toISP
     wr  mem  
     o Интерфейс, к которому подключен BR-RTR, подключен к сети 172.16.5.0/28  
     Настройка производится на EcoRouter:  
     en  
     conf t  
-    int ISP  
-    ip add 172.16.5.1/28  
     port te0  
     service-instance toISP  
     encapsulation untagged  
-    connect ip interface ISP  
+    int ISP  
+    ip add 172.16.5.1/28  
+    connect port te0 service-instance toISP  
     wr  mem  
     o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR  
     для доступа к сети Интернет:  
