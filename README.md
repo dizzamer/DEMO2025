@@ -106,15 +106,16 @@
 ## 4. Настройте на интерфейсе HQ-RTR в сторону офиса HQ виртуальный коммутатор:  
  ### ● Создайте подсеть управления с ID VLAN 999  
     Настройка на HQ-RTR:  
-    int vl999  
-    ip add 192.168.0.81/29  
-    description toSW  
     port te1  
     Service-instance toSW  
     Encapsulation untagged  
     ex  
-    Int vl999  
+    Int vl999
+    ip add 192.168.0.81/29  
+    description toSW  
     connect port te1 service-instance toSW  
+    end
+    wr mem
     Настройка на HQ-SW:  
     Перед настройкой линк ens3 в nmtui должен быть в состоянии - отключено
     Адресации так же не должно быть
@@ -125,13 +126,15 @@
     ifconfig ovs0-vlan999 inet 192.168.0.82/29 up  
  ### ● Сервер HQ-SRV должен находиться в ID VLAN 100  
     Настройка на HQ-RTR:  
-    int te1.100  
-    ip add 192.168.0.62/26  
     port te1  
     service-instance te1.100  
     encapsulation dot1q 100  
     rewrite pop 1  
-    connect ip interface te1.100  
+    int te1.100  
+    ip add 192.168.0.62/26  
+    connect port te1 service-instance te1.100  
+    end  
+    wr mem  
     Настройка на HQ-SW:  
     Перед настройкой линк ens4 в nmtui должен быть в состоянии - отключено
     Адресации так же не должно быть
@@ -142,13 +145,15 @@
     ifconfig ovs0-vlan100 inet up  
  ### ● Клиент HQ-CLI в ID VLAN 200  
     Настройка на HQ-RTR:  
-    int te1.200  
-    ip add 192.168.1.78/28  
     port te1  
     service-instance te1.200  
     encapsulation dot1q 200  
     rewrite pop 1  
+    int te1.200  
+    ip add 192.168.1.78/28  
     connect ip interface te1.200  
+    end  
+    wr mem  
     Настройка на HQ-SW: 
     Перед настройкой линк ens5 в nmtui должен быть в состоянии - отключено
     Адресации так же не должно быть
