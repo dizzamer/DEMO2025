@@ -372,10 +372,7 @@
    ## Предварительная настройка сервера:  
      setenforce 0  
      nano /etc/selinux  
-     Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive  
-     Через nmtui добавить второй dns сервер 192.168.0.1/26  
-     Впишите домен поиска au-team.irpo 
-     Перезапускаем линк в nmtui  
+     Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive   
      dnf install samba* krb5* bind -y  
      mv /etc/samba/smb.conf /etc/samba/smb.conf.back  
      Проверьте права на доступ к файлу /etc/krb5.conf:  
@@ -389,7 +386,7 @@
      hostnamectl set-hostname hq-srv.au-team.irpo; exec bash  
      Отключение DNS-службы systemd-resolved:  
      sudo nano /etc/systemd/resolved.conf   
-     Установите параметр DNSStubListener в значение no, как показано в примере.  
+     Установите параметр DNSStubListener в значение no.  
      Это  необходимо, чтобы отключить прослушивание systemd-resolved на порту 53:  
      ![systemd resolved](https://github.com/dizzamer/DEMO2025/blob/main/systemdresolved.png)  
      После внесения изменений в файл необходимо перезапустить systemd-resolved и NetworkManager командой:  
