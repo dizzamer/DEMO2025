@@ -57,9 +57,12 @@
     port te0  
     service-instance toISP  
     encapsulation untagged  
+    end  
+    wr mem  
     int ISP  
     ip add 172.16.4.1/28  
     connect port te0 service-instance toISP
+    end  
     wr  mem  
     o Интерфейс, к которому подключен BR-RTR, подключен к сети 172.16.5.0/28  
     Настройка производится на EcoRouter:  
@@ -68,9 +71,12 @@
     port te0  
     service-instance toISP  
     encapsulation untagged  
+    end  
+    wr mem  
     int ISP  
     ip add 172.16.5.1/28  
     connect port te0 service-instance toISP  
+    end  
     wr  mem  
     o На ISP настройте динамическую сетевую трансляцию в сторону HQ-RTR и BR-RTR  
     для доступа к сети Интернет:  
@@ -109,13 +115,14 @@
     port te1  
     Service-instance toSW  
     Encapsulation untagged  
-    ex  
+    end  
+    wr mem  
     Int vl999
     ip add 192.168.0.81/29  
     description toSW  
     connect port te1 service-instance toSW  
-    end
-    wr mem
+    end  
+    wr mem  
     Настройка на HQ-SW:  
     Перед настройкой линк ens3 в nmtui должен быть в состоянии - отключено
     Адресации так же не должно быть
@@ -130,6 +137,8 @@
     service-instance te1.100  
     encapsulation dot1q 100  
     rewrite pop 1  
+    end  
+    wr mem  
     int te1.100  
     ip add 192.168.0.62/26  
     connect port te1 service-instance te1.100  
@@ -149,6 +158,8 @@
     service-instance te1.200  
     encapsulation dot1q 200  
     rewrite pop 1  
+    end  
+    wr mem  
     int te1.200  
     ip add 192.168.1.78/28  
     connect port te1 service-instance te1.200 
