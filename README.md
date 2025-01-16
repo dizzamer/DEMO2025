@@ -59,9 +59,11 @@
     encapsulation untagged  
     end  
     wr mem  
+    en  
+    conf t  
     int ISP  
     ip add 172.16.4.1/28  
-    connect port te0 service-instance toISP
+    connect port te0 service-instance toISP  
     end  
     wr  mem  
     o Интерфейс, к которому подключен BR-RTR, подключен к сети 172.16.5.0/28  
@@ -73,6 +75,8 @@
     encapsulation untagged  
     end  
     wr mem  
+    en  
+    conf t  
     int ISP  
     ip add 172.16.5.1/28  
     connect port te0 service-instance toISP  
@@ -117,6 +121,8 @@
     Encapsulation untagged  
     end  
     wr mem  
+    en  
+    conf t  
     Int vl999
     ip add 192.168.0.81/29  
     description toSW  
