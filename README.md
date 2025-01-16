@@ -198,11 +198,12 @@
     Настройка на HQ-RTR:
     Interface tunnel.1  
     Ip add 172.16.0.1/30  
-    Ip mtu 1476
-    ip ospf network broadcast
-    ip ospf mtu-ignore
-    Ip tunnel 172.16.4.1 172.16.5.1 mode gre
-    end
+    Ip mtu 1476  
+    ip ospf network broadcast  
+    ip ospf mtu-ignore  
+    Ip tunnel 172.16.4.1 172.16.5.1 mode gre  
+    end  
+    wr mem  
     Conf t
     Router ospf 1
     Ospf router-id  172.16.0.1
