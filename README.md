@@ -407,8 +407,9 @@
      tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";  
      minimal-responses yes;  
      forwarders { 8.8.8.8; };  
-     ![sambadns](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba.png)   
      echo include "/var/lib/samba/bind-dns/named.conf"; >> /etc/named.conf  
+   ![sambadns](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba.png)  
+   ![sambadns](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba2.png) 
    ## Конфигурирование сервера с помощью утилиты samba-tool  
      Файла /etc/samba/smb.conf быть не должно, он сам создаст.  
      rm /etc/samba/smb.conf  
@@ -427,7 +428,7 @@
      systemctl enable named samba --now  
      systemctl status named samba  
      Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
-     ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png)  
+   ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png)  
    ## •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 ### Настройка производится на BR-SRV:    
  ## Управление пользователями и группами
