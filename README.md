@@ -427,7 +427,7 @@
      systemctl enable named samba --now  
      systemctl status named samba  
      Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
-     ![samba-tool](https://github.com/dizzamer/DEMO2025/blob/main/resolv.conf.png)  
+     ![samba-tool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png)  
    ## •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 ### Настройка производится на BR-SRV:    
  ## Управление пользователями и группами
