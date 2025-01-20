@@ -368,25 +368,6 @@
      nano /etc/selinux  
      Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive   
      dnf install samba* krb5* bind -y  
-     mv /etc/samba/smb.conf /etc/samba/smb.conf.back  
-     Проверьте права на доступ к файлу /etc/krb5.conf:  
-     ls -l /etc/krb5.conf  
-     Пользователем-владельцем файла должен быть root, а группой-владельцем – named.  
-     При необходимости смените владельцев:  
-     chown root:named /etc/krb5.conf  
-     Откройте файл /etc/krb5.conf:  
-     nano /etc/krb5.conf  
-     Присваивание серверу доменного имени, если еще не сделали:  
-     hostnamectl set-hostname hq-srv.au-team.irpo; exec bash  
-     Отключение DNS-службы systemd-resolved:  
-     sudo nano /etc/systemd/resolved.conf   
-     Установите параметр DNSStubListener в значение no.  
-     Это  необходимо, чтобы отключить прослушивание systemd-resolved на порту 53:  
-     ![systemd resolved](https://github.com/dizzamer/DEMO2025/blob/main/systemdresolved.png)  
-     После внесения изменений в файл необходимо перезапустить systemd-resolved и NetworkManager командой:  
-     systemctl restart systemd-resolved.service NetworkManager  
-     Проверьте изменения в настройках, выполните:  
-     cat /etc/resolv.conf  
      В выводе должен быть указан адрес отличающийся от 127.0.0.53  
      Настройка сетевого интерфейса производится через nmtui  
      Укажите в качестве DNS-сервера IP-адрес создаваемого контроллера домена:  
@@ -395,7 +376,7 @@
      Перезагружаем линк через nmtui или systemctl restart NetworkManager.  
      Проверьте доступные серверы имен, просмотрев файл resolv.conf:  
      cat /etc/resolv.conf  
-     В выводе должно отобразиться наши dns сервера и домен для поиска.  
+     В выводе должно отобразиться наш dns сервер и домен для поиска.  
    ## Создание домена под управлением контроллера домена Samba DC:  
      Создание резервных копий файлов  
      Переименуйте файл /etc/smb.conf, он будет создан позднее в процессе выполнения команды samba-tool.  
@@ -409,27 +390,13 @@
      -rw-r--r-- 1 root named 104 фев 7 11:05 /etc/krb5.conf  
      При необходимости смените владельцев:  
      chown root:named /etc/krb5.conf    
-     Откройте файл /etc/krb5.conf:  
-     nano /etc/krb5.conf  
-     В секции [libdefaults] установите имя домена, используемое по умолчанию:  
-     default_realm = au-team.irpo  
-     Добавьте в секции [realms] и [domain_realm] информацию об именах домена и сервера:  
-     [realms]  
-     AU-TEAM.IRPO = {  
-       kdc = br-srv.au-team.irpo  
-       admin_server = br-srv.au-team.irpo  
-     }  
-    [domain_realm]  
-       .au-team.irpo = AU-TEAM.IRPO  
-       au-team.irpo = AU-TEAM.IRPO  
-    Откройте файл /etc/krb5.conf.d/crypto-policies:  
-    nano /etc/krb5.conf.d/crypto-policies  
-    и приведите его содержание к следующему виду:  
-    [libdefaults]  
-     default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-     default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-     preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-
+     Откройте файл /etc/krb5.conf.d/crypto-policies:  
+     nano /etc/krb5.conf.d/crypto-policies  
+     и приведите его содержание к следующему виду:  
+     [libdefaults]  
+      default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+      default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
+      preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
    ## Настройка DNS-сервера BIND
      Откройте файл /etc/named.conf:    
      nano /etc/named.conf    
@@ -440,14 +407,15 @@
      tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";  
      minimal-responses yes;  
      forwarders { 8.8.8.8; };  
-   ## Первоначальное полуавтоматическое конфигурирование сервера с помощью утилиты samba-tool  
+     ![dns_samba](https://github.com/dizzamer/DEMO2025/blob/main/resolv.conf.png)  
+     echo include "/var/lib/samba/bind-dns/named.conf"; >> /etc/named.conf
+   ## Конфигурирование сервера с помощью утилиты samba-tool  
      Файла /etc/samba/smb.conf быть не должно, он сам создаст.  
      rm /etc/samba/smb.conf  
      samba-tool domain provision --use-rfc2307 --interactive  
      Описание некоторых опций (параметров) этой команды:
      use-rfc2307 – параметр добавляет POSIX атрибуты (UID / GID) на схеме AD. 
      Он понадобится при аутентификации клиентов Linux, BSD, или OS X (в том числе, на локальной машине), в дополнение к Microsoft Windows;
-     
      interactive – запуск в интерактивном режиме;  
      realm – указывает на полное DNS-имя домена, которое настроено в /etc/hosts, в верхнем регистре (в нашем случае это AU-TEAM.IRPO);  
      Domain – краткое имя домена NetBIOS (в примере – IRPO);  
@@ -456,8 +424,10 @@
      DNS forwarder IP address – данный параметр позволяет указать IP-адрес DNS-сервера, на который будут перенаправлены DNS-запросы, в том случае, когда сервер не сможет их разрешить.  
    ## Запуск и проверка работоспособности службы samba  
      Запустите и добавьте в автозагрузку службы samba и named:  
-     systemctl enable samba named --now  
-     systemctl status samba named  
+     systemctl enable named samba --now  
+     systemctl status named samba  
+     Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
+     ![samba-tool](https://github.com/dizzamer/DEMO2025/blob/main/resolv.conf.png)  
    ## •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 ### Настройка производится на BR-SRV:    
  ## Управление пользователями и группами
