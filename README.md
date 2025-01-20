@@ -333,7 +333,7 @@
     chmod 750 /var/named/master/*  
     systemctl restart named  
     Проверить зоны можно командой named-checkconf -z  
-    ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
+     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/checkconf.png)  
      Для полной работоспособности на HQ-CLI нужно установить в качестве dns севрера HQ-SRV:  
      nano /etc/resolv.conf на всех устройствах должен иметь следюущий вид:  
      ![resolvconf](https://github.com/dizzamer/DEMO2025/blob/main/resolv.conf.png)  
@@ -407,8 +407,8 @@
      tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";  
      minimal-responses yes;  
      forwarders { 8.8.8.8; };  
-     ![dns samba](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba.png)  
-     echo include "/var/lib/samba/bind-dns/named.conf"; >> /etc/named.conf
+     ![sambadns](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba.png)   
+     echo include "/var/lib/samba/bind-dns/named.conf"; >> /etc/named.conf  
    ## Конфигурирование сервера с помощью утилиты samba-tool  
      Файла /etc/samba/smb.conf быть не должно, он сам создаст.  
      rm /etc/samba/smb.conf  
@@ -427,7 +427,7 @@
      systemctl enable named samba --now  
      systemctl status named samba  
      Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
-     ![samba tool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png) 
+     ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png)  
    ## •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
 ### Настройка производится на BR-SRV:    
  ## Управление пользователями и группами
