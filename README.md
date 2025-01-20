@@ -407,7 +407,7 @@
      tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";  
      minimal-responses yes;  
      forwarders { 8.8.8.8; };  
-     ![dns_samba](https://github.com/dizzamer/DEMO2025/blob/main/resolv.conf.png)  
+     ![dns_samba](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba.png)  
      echo include "/var/lib/samba/bind-dns/named.conf"; >> /etc/named.conf
    ## Конфигурирование сервера с помощью утилиты samba-tool  
      Файла /etc/samba/smb.conf быть не должно, он сам создаст.  
