@@ -422,7 +422,7 @@
      Domain – краткое имя домена NetBIOS (в примере – IRPO);  
      Server Rules – роль сервера (DC – domain controller);  
      DNS backend – DNS-сервер. Возможные значения – SAMBA_INTERNAL (внутренний DNS сервера), BIND9_FLATFILE, BIND9_DLZ, NONE(в нашем случае SAMBA_INTERNAL);  
-   ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/sambatoolprovision.png) 
+   ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-toolprovision.png) 
    ## Запуск и проверка работоспособности службы samba  
      Запустите и добавьте в автозагрузку службы samba и named:  
      systemctl enable named samba --now  
