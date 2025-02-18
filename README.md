@@ -388,38 +388,23 @@
      Domain – краткое имя домена NetBIOS (в примере – IRPO);  
      Server Rules – роль сервера (DC – domain controller);  
      DNS backend – DNS-сервер. Возможные значения – SAMBA_INTERNAL (внутренний DNS сервера), BIND9_FLATFILE, BIND9_DLZ, NONE(в нашем случае SAMBA_INTERNAL);  
+     
    ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-toolprovision.png) 
-   ## Запуск и проверка работоспособности службы samba  
+   ## Удаление использования службы dns  
      Запустите и добавьте в автозагрузку службы samba и named:  
      systemctl enable named samba --now  
      systemctl status named samba  
      Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
    ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png)  
    ## •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
-### Настройка производится на BR-SRV:    
- ## Управление пользователями и группами
-   Список пользователей:  
-   samba-tool user list  
-   Создадим пользователя в Active Directory и делаем тесты:  
-   samba-tool user create user№.hq или  
-    smbpasswd -a user№.hq  
-    smbpasswd -e user№.hq
-    username - имя нового пользователя в AD;
-    ключ -a - создает пользователя;
-    ключ -e - активирует пользователя   
-    samba-tool group list  
-    Добавление группы:  
-    samba-tool group add hq  
-    Добавление пользователя в группу:  
-    samba-tool group addmembers hq user№.hq  
-   ## Проверка подключения к samba ресурсам
-     Вывести список сетевых ресурсов samba:  
-      smbclient -L localhost -U%  
-      
+     sudo samba-tool group add hq
+    for i in {1..5}; do
+    sudo samba-tool user create user$i.hq P@ssw0rd$i
+    sudo samba-tool group addmembers hq user$i.hq
+    done    
 •	Введите в домен машину HQ-CLI  
 ### Настройка проивзодится на HQ-CLI:  
   https://redos.red-soft.ru/base/redos-7_3/7_3-administation/7_3-domain-redos/7_3-domain-config/7_3-redos-in-samba/?nocache=1730793368537  
-  
 •	Пользователи группы hq имеют право аутентифицироваться на клиентском ПК  
 •	Пользователи группы hq должны иметь возможность повышать привилегии для выполнения ограниченного набора команд: cat, grep, id. Запускать другие команды с повышенными привилегиями пользователи группы не имеют права  
 •	Выполните импорт пользователей из файла users.csv. Файл будет располагаться на виртуальной машине BR-SRV в папке /opt  
