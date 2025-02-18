@@ -399,12 +399,12 @@
      Откройте файл /etc/named.conf:    
      nano /etc/named.conf    
      и внесите в блок options { следующие значения параметров (при необходимости, добавив отсутствующие параметры):    
-     listen-on port 53 { 192.168.1.2; };  
+     listen-on port 53 { 192.168.2.2; };  
      allow-query { any; };  
      dnssec-validation no;  
      tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";  
      minimal-responses yes;  
-     forwarders { 8.8.8.8; };  
+     forwarders { 8.8.8.8; 192.168.2.2; };  
      echo include "/var/lib/samba/bind-dns/named.conf"; >> /etc/named.conf  
    ![sambadns](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba.png)  
    ![sambadns](https://github.com/dizzamer/DEMO2025/blob/main/dns_samba2.png) 
