@@ -378,17 +378,8 @@
      cp /etc/krb5.conf /etc/krb5.conf.back  
    ## Конфигурирование сервера с помощью утилиты samba-tool  
      Файла /etc/samba/smb.conf быть не должно, он сам создаст.  
-     rm /etc/samba/smb.conf  
+     rm -rf /etc/samba/smb.conf  
      samba-tool domain provision --use-rfc2307 --interactive  
-     Описание некоторых опций (параметров) этой команды:
-     use-rfc2307 – параметр добавляет POSIX атрибуты (UID / GID) на схеме AD. 
-     Он понадобится при аутентификации клиентов Linux, BSD, или OS X (в том числе, на локальной машине), в дополнение к Microsoft Windows;
-     interactive – запуск в интерактивном режиме;  
-     realm – указывает на полное DNS-имя домена, которое настроено в /etc/hosts, в верхнем регистре (в нашем случае это AU-TEAM.IRPO);  
-     Domain – краткое имя домена NetBIOS (в примере – IRPO);  
-     Server Rules – роль сервера (DC – domain controller);  
-     DNS backend – DNS-сервер. Возможные значения – SAMBA_INTERNAL (внутренний DNS сервера), BIND9_FLATFILE, BIND9_DLZ, NONE(в нашем случае SAMBA_INTERNAL);  
-     
    ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-toolprovision.png) 
    ## Удаление использования службы dns  
      systemctl stop samba
@@ -398,12 +389,12 @@
      sudo rm -rf /var/lib/samba/private/dns
      sudo rm -rf /var/lib/samba/private/dns.keytab
      Добавляем в файл /etc/smb.conf следующее
-   ![smbconf](https://github.com/dizzamer/DEMO2025/blob/main/smbconf.png) 
-    
-     Запустите и добавьте в автозагрузку службы samba и named:  
-     systemctl enable named samba --now  
-     systemctl status named samba  
-     Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
+   ![smbconf](https://github.com/dizzamer/DEMO2025/blob/main/smbconf.png)  
+   
+      Запустите и добавьте в автозагрузку службы samba и named:  
+      systemctl enable named samba --now  
+      systemctl status named samba  
+      Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
    ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png)  
    ## •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
      sudo samba-tool group add hq
