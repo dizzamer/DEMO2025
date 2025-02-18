@@ -362,15 +362,11 @@
 ## 1.	Настройте доменный контроллер Samba на машине BR-SRV.   
   ### Настройка проивзодится на BR-SRV:  
    ## Предварительная настройка сервера:  
-     выставляем 192.168.0.2 в качестве нащего днс сервера на линке в nmtui
+     выставляем 192.168.0.2 в качестве нащего днс сервера на линке в nmtui и домен поиска au-team.irpo  
      setenforce 0  
      nano /etc/selinux  
      Замените в файле конфигурации /etc/selinux/config режим enforcing на permissive   
      dnf install samba* krb5* -y  
-     Укажите в качестве DNS-сервера IP-адрес создаваемого контроллера домена:  
-     dns=192.168.0.2;  
-     dns-search=hq-srv.au-team.irpo;  
-     Перезагружаем линк через nmtui или systemctl restart NetworkManager.  
      Проверьте доступные серверы имен, просмотрев файл resolv.conf:  
      cat /etc/resolv.conf  
      В выводе должно отобразиться наш dns сервер и домен для поиска.  
@@ -380,20 +376,6 @@
      cp /etc/samba/smb.conf /etc/samba/smb.conf.back  
      Создайте резервную копию используемого по умолчанию конфигурационного файла kerberos:  
      cp /etc/krb5.conf /etc/krb5.conf.back  
-     Настройка конфигурации Kerberos:  
-     ls -l /etc/krb5.conf  
-     Проверьте права на доступ к файлу /etc/krb5.conf:  
-     Пользователем-владельцем файла должен быть root, а группой-владельцем – named. Пример корректного вывода:  
-     -rw-r--r-- 1 root named 104 фев 7 11:05 /etc/krb5.conf  
-     При необходимости смените владельцев:  
-     chown root:named /etc/krb5.conf    
-     Откройте файл /etc/krb5.conf.d/crypto-policies:  
-     nano /etc/krb5.conf.d/crypto-policies  
-     и приведите его содержание к следующему виду:  
-     [libdefaults]  
-      default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-      default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
-      preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC DES-CBC-CRC DES3-CBC-SHA1 DES-CBC-MD5  
    ## Настройка DNS-сервера BIND
      Откройте файл /etc/named.conf:    
      nano /etc/named.conf    
