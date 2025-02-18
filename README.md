@@ -391,6 +391,15 @@
      
    ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-toolprovision.png) 
    ## Удаление использования службы dns  
+     systemctl stop samba
+     Подчищаем, все где могут храниться наши записи
+     sudo rm -rf /var/lib/samba/private/dns_update_cache
+    sudo rm -rf /var/lib/samba/private/dns_update_list
+     sudo rm -rf /var/lib/samba/private/dns
+     sudo rm -rf /var/lib/samba/private/dns.keytab
+     Добавляем в файл /etc/smb.conf следующее
+   ![smbconf](https://github.com/dizzamer/DEMO2025/blob/main/smbconf.png) 
+    
      Запустите и добавьте в автозагрузку службы samba и named:  
      systemctl enable named samba --now  
      systemctl status named samba  
