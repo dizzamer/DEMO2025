@@ -215,7 +215,7 @@
     Ospf router-id  172.16.0.1
     network 172.16.0.0 0.0.0.3 area 0
     network 192.168.0.0 0.0.0.63 area 0
-    network 192.168.1.0 0.0.0.15 area 0
+    network 192.168.1.78 0.0.0.15 area 0
     passive-interface default
     no passive-interface tunnel.1
     Настройка на BR-RTR:
