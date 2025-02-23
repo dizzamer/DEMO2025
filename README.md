@@ -104,7 +104,7 @@
     без дополнительной аутентификации.  
     usermod -aG wheel sshuser  
     nano /etc/sudoers  
-    sshuser ALL=(ALL) NOPASSWD:ALL  
+    sshuser ALL=(ALL) NOPASSWD: ALL  
    ### ● Создайте пользователя net_admin на маршрутизаторах HQ-RTR и BR-RTR  
     Настройка производится на EcoRouter:  
     username net_admin  
