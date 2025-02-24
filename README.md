@@ -328,7 +328,7 @@
     nano /var/named/master/168.192.zone    
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192zone.png)  
     chown -R root:named /var/named/master/  
-    chown -R root:named /etc/named.conf
+    chown -R root:named /etc/named.conf  
     chmod 750 /var/named/  
     chmod 750 /var/named/master/  
     systemctl restart named  
