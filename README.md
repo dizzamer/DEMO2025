@@ -439,7 +439,7 @@
  ## Настройка экспорта  
     Добавляем в /etc/exports:  
     nano /etc/exports  
-    /raid5/nfs 192.168.1.0/24(rw,sync,no_root_squash,no_subtree_check)  
+    /raid5/nfs 192.168.1.0/24(rw,sync,insecure,nohide,all_squash,no_subtree_check)
   ![exports](https://github.com/dizzamer/DEMO2025/blob/main/exports.png) 
   ## Применяем изменения и перезагружаем службу
     exportfs -ra  
