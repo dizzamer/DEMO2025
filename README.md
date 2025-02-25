@@ -183,20 +183,16 @@
 ## 5. Настройка безопасного удаленного доступа на серверах HQ-SRV и BR-SRV:  
  ### ● Для подключения используйте порт 2024  
      Перед настройкой выполните команду setenforce 0, далее переводим selinux в состояние  
-     permissive в файле /etc/selinux/config
+     disabled в файле /etc/selinux/config
      dnf install openssh - если не установлен
      systemctl enable --now sshd
-     nano /etc/ssh/sshd_config
-     Меняем порт на 2024
- ### ● Разрешите подключения только пользователю sshuser  
-      nano /etc/ssh/sshd_config
-      AllowUsers sshuser
+     echo Port 2024 >> /etc/ssh/sshd_config
+  ### ● Разрешите подключения только пользователю sshuser  
+      eccho AllowUsers sshuser >> nano /etc/ssh/sshd_config
  ### ● Ограничьте количество попыток входа до двух  
-      nano /etc/ssh/sshd_config
-      MaxAuthTries 2
+      echo MaxAuthTries 2 >> /etc/ssh/sshd_config
  ### ● Настройте баннер «Authorized access only»  
       echo «Authorized access only» > /etc/ssh/sshd_banner
-      nano /etc/ssh/sshd_config 
       echo Banner /etc/ssh/sshd_banner >> /etc/ssh/sshd_config
       systemctl restart sshd
 ## 6. Между офисами HQ и BR необходимо сконфигурировать ip туннель  
