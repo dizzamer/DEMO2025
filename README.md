@@ -414,11 +414,23 @@
   Перед тем как начать проверяем, что установлены следюущие пакеты
   dnf isntall mdadm nfs-utils -y
 ## •	При помощи трёх дополнительных дисков, размером 1Гб каждый, на HQ-SRV сконфигурируйте дисковый массив уровня 5  
-    mdadm --create --verbose /dev/md0 --level=5 --raid-devices=3 /dev/sdb /dev/sdc /dev/sdd  
- ![mdadmcreate](https://github.com/dizzamer/DEMO2025/blob/main/mdadm_create.png)  
- •	Имя устройства – md0, конфигурация массива размещается в файле /etc/mdadm.conf  
- •	Обеспечьте автоматическое монтирование в папку /raid5  
- •	Создайте раздел, отформатируйте раздел, в качестве файловой системы используйте ext4  
+    mdadm --create --verbose /dev/md0 --level=5 --raid-devices=3 /dev/sdb /dev/sdc /dev/sdd   
+ ![mdadmcreate](https://github.com/dizzamer/DEMO2025/blob/main/mdadm_create.png)    
+ ![mdaddetail](https://github.com/dizzamer/DEMO2025/blob/main/mdadm_detail.png)  
+## •	Имя устройства – md0, конфигурация массива размещается в файле /etc/mdadm.conf  
+    mdadm --detail --scan >> /etc/mdadm.conf    
+ ## •	Обеспечьте автоматическое монтирование в папку /raid5  
+    Добавляем в /etc/fstab:  
+    nano /etc/fstab
+    /dev/md0 /raid5 ext4 defaults 0 0
+![fstab](https://github.com/dizzamer/DEMO2025/blob/main/fstab.png)  
+ ## •	Создайте раздел, отформатируйте раздел, в качестве файловой системы используйте ext4  
+     mkfs.ext4 /dev/md0
+   ![mkfs](https://github.com/dizzamer/DEMO2025/blob/main/mkfs.png)  
+ ## •	Создаем точку монтирования и примонтируемся    
+    mkdir -p /raid5
+    mount -a
+  ![mount](https://github.com/dizzamer/DEMO2025/blob/main/mount.png)  
  •	Настройте сервер сетевой файловой системы(nfs), в качестве папки общего доступа выберите /raid5/nfs, доступ для чтения и записи для всей сети в сторону HQ-CLI  
  •	На HQ-CLI настройте автомонтирование в папку /mnt/nfs  
  •	Основные параметры сервера отметьте в отчёте  
