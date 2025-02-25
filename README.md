@@ -427,23 +427,23 @@
  ## •	Создайте раздел, отформатируйте раздел, в качестве файловой системы используйте ext4  
      mkfs.ext4 /dev/md0  
    ![mkfs](https://github.com/dizzamer/DEMO2025/blob/main/mkfs.png)   
- ## •	Создаем точку монтирования и примонтируемся    
-    mkdir -p /raid5  
-    mount -a  
+ ## •	Создаем точку монтирования и примонтируемся     
+    mkdir -p /raid5   
+    mount -a   
   ![mount](https://github.com/dizzamer/DEMO2025/blob/main/mount.png)   
- ### •	Настройте сервер сетевой файловой системы(nfs), в качестве папки общего доступа выберите /raid5/nfs, доступ для чтения и записи для всей сети в сторону HQ-CLI  
-  ## •	Создаем папку для NFS
+ ### •	Настройте сервер сетевой файловой системы(nfs), в качестве папки общего доступа выберите /raid5/nfs, доступ для чтения и записи для всей сети в сторону HQ-CLI   
+  ## •	Создаем папку для NFS  
     mkdir -p /raid5/nfs  
     chmod 777 /raid5/nfs  
- ![mkdir_nfs](https://github.com/dizzamer/DEMO2025/blob/main/mkdir_nfs.png) 
+ ![mkdir_nfs](https://github.com/dizzamer/DEMO2025/blob/main/mkdir_nfs.png)  
  ## Настройка экспорта  
     Добавляем в /etc/exports:  
     nano /etc/exports  
-    /raid5/nfs 192.168.1.0/24(rw,sync,insecure,nohide,all_squash,no_subtree_check)
-  ![exports](https://github.com/dizzamer/DEMO2025/blob/main/exports.png) 
+    /raid5/nfs 192.168.1.0/24(rw,sync,insecure,nohide,all_squash,no_subtree_check)  
+  ![exports](https://github.com/dizzamer/DEMO2025/blob/main/exports.png)  
   ## Применяем изменения и перезагружаем службу
     exportfs -ra  
-    systemctl restart nfs-server
+    systemctl restart nfs-server  
  ### Настройка проивзодится на HQ-CLI:
   ## •	На HQ-CLI настройте автомонтирование в папку /mnt/nfs  
       Добавляем в /etc/fstab:    
