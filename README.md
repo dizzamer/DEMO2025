@@ -581,12 +581,12 @@
      mysql_secure_installation  
 ## •	Создайте базу данных moodledb  
      mysql -u root -p  
-     CREATE DATABASE moodledb DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+     CREATE DATABASE moodledb DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;  
 ## •	Создайте пользователя moodle с паролем P@ssw0rd и предоставьте ему права доступа к этой базе данных  
-     CREATE USER 'moodle'@'localhost' IDENTIFIED BY 'P@ssw0rd';
-     GRANT ALL PRIVILEGES ON moodledb.* TO 'moodle'@'localhost';
-     FLUSH PRIVILEGES;
-     EXIT;
+     CREATE USER 'moodle'@'localhost' IDENTIFIED BY 'P@ssw0rd';  
+     GRANT ALL PRIVILEGES ON moodledb.* TO 'moodle'@'localhost';  
+     FLUSH PRIVILEGES;  
+     EXIT;  
 ## •	У пользователя admin в системе обучения задайте пароль P@ssw0rd  
      Создаем директории для нашего moodle
      mkdir /opt/moodle
