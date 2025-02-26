@@ -448,8 +448,9 @@
       hq-srv:/raid5/nfs /mnt/nfs nfs defaults 0 0
   ![fstab_hqcli](https://github.com/dizzamer/DEMO2025/blob/main/fstab_hqcli.png)  
   ## Создаем точку монтирования и примонтируемся  
-    mkdir -p /mnt/nfs
-    mount -a
+    mkdir -p /mnt/nfs  
+    mount -a 
+  ![mountdir_hqcli](https://github.com/dizzamer/DEMO2025/blob/main/mount_cli.png)  
    •	Основные параметры сервера отметьте в отчёте  
   ## 3.	Настройте службу сетевого времени на базе сервиса chrony  
   •	В качестве сервера выступает HQ-RTR  
