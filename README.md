@@ -379,13 +379,13 @@
      samba-tool domain provision --use-rfc2307 --interactive  
    ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-toolprovision.png) 
    ## Удаление использования службы dns  
-     systemctl stop samba
-     Подчищаем, все где могут храниться наши записи
-     sudo rm -rf /var/lib/samba/private/dns_update_cache
-    sudo rm -rf /var/lib/samba/private/dns_update_list
-     sudo rm -rf /var/lib/samba/private/dns
-     sudo rm -rf /var/lib/samba/private/dns.keytab
-     Добавляем в файл /etc/smb.conf следующее
+     systemctl stop samba  
+     Подчищаем, все где могут храниться наши записи  
+     sudo rm -rf /var/lib/samba/private/dns_update_cache  
+    sudo rm -rf /var/lib/samba/private/dns_update_list  
+     sudo rm -rf /var/lib/samba/private/dns  
+     sudo rm -rf /var/lib/samba/private/dns.keytab  
+     Добавляем в файл /etc/smb.conf следующее  
    ![smbconf](https://github.com/dizzamer/DEMO2025/blob/main/smbconf.png)  
    
       Запустите и добавьте в автозагрузку службы samba и named:  
@@ -394,12 +394,16 @@
       Проверка созданного домена с помощью команды samba-tool domain info au-team.irpo:  
    ![sambatool](https://github.com/dizzamer/DEMO2025/blob/main/samba-tool.png)  
    ## •	Создайте 5 пользователей для офиса HQ: имена пользователей формата user№.hq. Создайте группу hq, введите в эту группу созданных пользователей  
-     sudo samba-tool group add hq
-    for i in {1..5}; do
-    sudo samba-tool user create user$i.hq P@ssw0rd$i
-    sudo samba-tool group addmembers hq user$i.hq
+     sudo samba-tool group add hq  
+    for i in {1..5}; do  
+    sudo samba-tool user create user$i.hq P@ssw0rd$i  
+    sudo samba-tool group addmembers hq user$i.hq  
     done    
-•	Введите в домен машину HQ-CLI  
+   ## •	Введите в домен машину HQ-CLI  
+     Перед вводом необходимо ввести на HQ-SRV:  
+     smbclient -L localhost -U administrator  
+     Проверка kerberos: 
+     kinit administrator@localhost
 ### Настройка проивзодится на HQ-CLI:  
   https://redos.red-soft.ru/base/redos-7_3/7_3-administation/7_3-domain-redos/7_3-domain-config/7_3-redos-in-samba/?nocache=1730793368537  
 •	Пользователи группы hq имеют право аутентифицироваться на клиентском ПК  
