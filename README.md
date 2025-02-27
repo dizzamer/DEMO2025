@@ -323,7 +323,8 @@
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/au-team.png)  
     nano /var/named/master/168.192.zone    
     ![au team irpo зона](https://github.com/dizzamer/DEMO2025/blob/main/0.168.192zone.png)  
-    chown -R root:named /var/named/master/  
+    chown -R root:named /var/named/master/
+    chown -R named /var/named
     chown -R root:named /etc/named.conf  
     chmod 750 /var/named/  
     chmod 750 /var/named/master/  
@@ -503,7 +504,12 @@
           Пингуем удаленные хосты с помощью Ansible:  
            ansible all -m ping  
            В результате под каждым хостом должно быть написано "ping": "pong".  
-## 5.	Развертывание приложений в Docker на сервере BR-SRV.  
+## 5.	Развертывание приложений в Docker на сервере BR-SRV. 
+    Установка необходимых пакетов:  
+    dnf install docker-ce docker-ce-cli docker-compose -y  
+    systemctl enable docker --now
+    Добавляем текущего пользователя в группу докер  
+    usermod -aG docker $USER  
 ### •	Создайте в домашней директории пользователя файл wiki.yml для приложения MediaWiki.  
      Развертывание производится на сервере BR-SRV:   
      touch /home/student/wiki.yml  
