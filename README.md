@@ -464,7 +464,7 @@
   ### Настройка проивзодится на HQ-RTR:  
       en  
       conf t  
-      ntp server 172.16.14.1 5  
+      ntp server 172.16.4.1 5 
       ntp timezone ?  
       ntp timezone UTC+3  
       end  
