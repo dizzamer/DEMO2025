@@ -471,6 +471,41 @@
 •	На HQ-RTR настройте сервер chrony, выберите стратум 5  
 •	В качестве клиентов настройте HQ-SRV, HQ-CLI, BR-RTR, BR-SRV  
 ## 4.	Сконфигурируйте ansible на сервере BR-SRV  
+  ### Настройка подключения по ssh BR-RTR | HQ-RTR
+     Настройка производится на HQ-RTR:  
+     en  
+     conf  
+     security-profile 1  
+     rule 1 permit tcp any eq 22 any  
+     end  
+     wr mem  
+     en
+     configure
+     ip vrf vrf0  
+     transport input ssh    
+     security 1 vrf vrf0  
+     end  
+     wr mem  
+     en
+     conf
+     no security default  
+     Настройка производится на BR-RTR: 
+     en  
+     conf  
+     security-profile 1  
+     rule 1 permit tcp any eq 22 any  
+     end  
+     wr mem  
+     en
+     configure
+     ip vrf vrf0  
+     transport input ssh    
+     security 1 vrf vrf0  
+     end  
+     wr mem  
+     en
+     conf
+     no security default
   ### •	Сформируйте файл инвентаря, в инвентарь должны входить HQ-SRV, HQ-CLI, HQ-RTR и BR-RTR  
       dnf install ansible -y  
       1) В файле /etc/ansible/hosts.yml прописать все хосты, на которые будет распространяться конфигурация.  
