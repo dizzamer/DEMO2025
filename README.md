@@ -386,7 +386,7 @@
     sudo rm -rf /var/lib/samba/private/dns_update_list  
      sudo rm -rf /var/lib/samba/private/dns  
      sudo rm -rf /var/lib/samba/private/dns.keytab  
-     Добавляем в файл /etc/smb.conf следующее  
+     Добавляем в файл /etc/samba/smb.conf следующее  
    ![smbconf](https://github.com/dizzamer/DEMO2025/blob/main/smbconf.png)  
    
       Запустите и добавьте в автозагрузку службы samba и named:  
