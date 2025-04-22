@@ -550,7 +550,7 @@
     Пингуем удаленные хосты с помощью Ansible находясь в пользователе sshuser:  
     ansible -i /etc/ansible/inventory.ini all -m ping 
     В результате под каждым хостом должно быть написано "ping": "pong".  
-  [ping](https://github.com/dizzamer/DEMO2025/blob/main/ansubleping.png)
+![inventory](https://github.com/dizzamer/DEMO2025/blob/main/ansubleping.png) 
 ## 5.	Развертывание приложений в Docker на сервере BR-SRV. 
     Установка необходимых пакетов:  
     dnf install docker-ce docker-ce-cli docker-compose -y  
