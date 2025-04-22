@@ -95,7 +95,7 @@
     в случае если там есть то, что вы не добавляли - удалить  
     iptables –L –t nat - должны высветится в Chain POSTROUTING две настроенные подсети.  
 ## 3. Создание локальных учетных записей
- ### ● Создайте пользователя sshuser на серверах HQ-SRV и BR-SRV  
+ ### ● Создайте пользователя sshuser на серверах HQ-RTR | BR-RTR | HQ-CLI  
     useradd -m -u 1010 sshuser  
     o Пароль пользователя sshuser с паролем P@ssw0rd  
     echo "sshuser:P@ssw0rd" | sudo chpasswd  
@@ -383,7 +383,7 @@
      systemctl stop samba  
      Подчищаем, все где могут храниться наши записи  
      sudo rm -rf /var/lib/samba/private/dns_update_cache  
-    sudo rm -rf /var/lib/samba/private/dns_update_list  
+     sudo rm -rf /var/lib/samba/private/dns_update_list  
      sudo rm -rf /var/lib/samba/private/dns  
      sudo rm -rf /var/lib/samba/private/dns.keytab  
      Добавляем в файл /etc/samba/smb.conf следующее  
@@ -507,37 +507,50 @@
      conf
      no security default
   ### •	Сформируйте файл инвентаря, в инвентарь должны входить HQ-SRV, HQ-CLI, HQ-RTR и BR-RTR  
+    • Рабочий каталог ansible должен располагаться в /etc/ansible  
       dnf install ansible -y  
-      1) В файле /etc/ansible/hosts.yml прописать все хосты, на которые будет распространяться конфигурация.  
-      Хосты можно разделить по группам, а так же, если у вас есть домен, то автоматически экспортировать список из домена.  
-      Можно прописывать как ip адреса так и имена хостов, если они резолвятся DNS ом в сети.  
-      nano /etc/ansible/inventory.yml  
-       clients:  
-         hosts:  
-           hq-cli.au-team.irpo:  
-       servers:  
-         hosts:  
-           hq-srv.au-team.irpo:  
-       routers:  
-         hosts:  
-           hq-rtr.au-team.irpo:  
-           br-rtr.au-team.irpo:  
-           
-        2) Подключение к хостам осуществляется по протоколу ssh с помощью rsa ключей.    
-        Сгенерировать серверный ключ можно командой ниже. При её выполнении везде нажмите Enter.    
-        ssh-keygen -C "$(whoami)@$(hostname)-$(date -I)"  
+      1) В файле можно прописывать как ip адреса так и имена хостов, если они резолвятся DNS ом в сети.  
+      nano /etc/ansible/inventory.ini  
+      [clients]
+      hq-cli ansible_host=192.168.1.65
         
-        3) Далее нужно распространить ключ на все подключенные хосты.  
-        Распространить ключи на хосты можно командой:  
-        ssh-copy-id root@server  
-        где:  
-        root - это пользователь, от имени которого будут выполняться плейбуки;  
-        server - IP-адрес хоста.  
- •	Рабочий каталог ansible должен располагаться в /etc/ansible  
+      [servers]
+      hq-srv ansible_host=192.168.0.2
+         
+      [routers]
+      hq-rtr ansible_host=192.168.0.62
+      br-rtr ansible_host=172.16.5.1
+         
+      [clients:vars]
+      ansible_port=2024
+      ansible_user=sshuser
+         
+      [servers:vars]
+      ansible_port=2024
+      ansible_user=sshuser
+ 
+      [routers:vars]
+      ansible_user=net_admin
+      ansible_password=P@$$word
+   ![inventory](https://github.com/dizzamer/DEMO2025/blob/main/inventoryini.png) 
+   ###  Настройка подключения по ключам
+    2) Подключение к хостам осуществляется по протоколу ssh с помощью rsa ключей.  
+    Для начала переходим в ранее созданно пользователя sshuser командой:
+    su sshuser
+    Сгенерировать серверный ключ можно командой ниже. При её выполнении везде нажмите Enter.
+    ssh-keygen
+    3) Далее нужно распространить ключ на все подключенные хосты.  
+    Распространить ключи на хосты можно командой:  
+    На роутеры ключи пробрасывать не нужно, для них подключение по паролю!
+    ssh-copy-id sshuser@{hq-srv, hq-cli} 
+    где:  
+    sshuser - это пользователь, от имени которого будут выполняться плейбуки;  
+    server - IP-адрес хоста.  
    ### •	Все указанные машины должны без предупреждений и ошибок отвечать pong на команду ping в ansible посланную с BR-SRV  
-          Пингуем удаленные хосты с помощью Ansible:  
-           ansible all -m ping  
-           В результате под каждым хостом должно быть написано "ping": "pong".  
+    Пингуем удаленные хосты с помощью Ansible находясь в пользователе sshuser:  
+    ansible -i /etc/ansible/inventory.ini all -m ping 
+    В результате под каждым хостом должно быть написано "ping": "pong".  
+  [ping](https://github.com/dizzamer/DEMO2025/blob/main/ansubleping.png)
 ## 5.	Развертывание приложений в Docker на сервере BR-SRV. 
     Установка необходимых пакетов:  
     dnf install docker-ce docker-ce-cli docker-compose -y  
