@@ -599,9 +599,6 @@
       images:
       Поднимаем стек контейнеров с помощью команды: 
       docker compose -f wiki.yml up -d  
-      После установки необходимо раскоментировать строчку с решеткой в файле wiki.yml:  
-      docker-compose -f wiki.yml stop  
-      docker-compose -f wiki.yml up -d  
  ![wikiyml](https://github.com/dizzamer/DEMO2025/blob/main/wikiyml.png)  
 ## Настройка mediawiki после успешного поднятия контейнеров  
   Переходим по доменному имени или адреса нашего сервера, должны увидеть такую картину:  
