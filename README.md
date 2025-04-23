@@ -558,6 +558,16 @@
     Добавляем текущего пользователя в группу докер, текущий пользователь - student   
     usermod -aG docker $USER  
 ### •	Создайте в домашней директории пользователя файл wiki.yml для приложения MediaWiki.  
+     •	Средствами docker compose должен создаваться стек контейнеров с приложением MediaWiki и базой данных.  
+     •	Используйте два сервиса  
+     •	Основной контейнер MediaWiki должен называться wiki и использовать образ mediawiki  
+     •	Файл LocalSettings.php с корректными настройками должен находиться в домашней папке пользователя и автоматически 
+      монтироваться в образ.  
+     •	Контейнер с базой данных должен называться mariadb и использовать образ mariadb.  
+     •	Он должен создавать базу с названием mediawiki, доступную по стандартному порту, пользователя wiki с паролем   
+     WikiP@ssw0rd должен иметь права доступа к этой базе данных  
+     •	MediaWiki должна быть доступна извне через порт 8080.  
+     Для того, чтобы MediaWiki была доступна извен через порт 8080, нужно в ports сначала указывать 8080  
      Развертывание производится на сервере BR-SRV:   
      touch /home/student/wiki.yml  
      nano /home/student/wiki.yml  
@@ -592,14 +602,45 @@
       После установки необходимо раскоментировать строчку с решеткой в файле wiki.yml:  
       docker-compose -f wiki.yml stop  
       docker-compose -f wiki.yml up -d  
- ![wikiyml](https://github.com/dizzamer/DEMO2025/blob/main/wikiyml.png)
-•	Средствами docker compose должен создаваться стек контейнеров с приложением MediaWiki и базой данных.  
-•	Используйте два сервиса  
-•	Основной контейнер MediaWiki должен называться wiki и использовать образ mediawiki  
-•	Файл LocalSettings.php с корректными настройками должен находиться в домашней папке пользователя и автоматически монтироваться в образ.  
-•	Контейнер с базой данных должен называться mariadb и использовать образ mariadb.  
-•	Он должен создавать базу с названием mediawiki, доступную по стандартному порту, пользователя wiki с паролем WikiP@ssw0rd должен иметь права доступа к этой базе данных  
-•	MediaWiki должна быть доступна извне через порт 8080.  
+ ![wikiyml](https://github.com/dizzamer/DEMO2025/blob/main/wikiyml.png)  
+## Настройка mediawiki после успешного поднятия контейнеров  
+  Переходим по доменному имени или адреса нашего сервера, должны увидеть такую картину:  
+ ![wikistart](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki.png)  
+  Далее настройка выглядит следуюшим образом:  
+  На скриншоте ниже здесь этап проверки всего необходимого для работы MediaWiki, проверка должна пройти успешно  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki2.png)  
+  Далее необходимо указать в хосте базы данных то, как у вас называется контнейнер на сервере, у меня mariadb  
+  Проверить можно зайдя на сервер и выполнить команду docker ps:  
+  ![hostwiki](https://github.com/dizzamer/DEMO2025/blob/main/hostwiki.png)  
+  Указываем, все как по заданию и жмем далее:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki3.png)  
+  Далее будет такое у вас как снизу, жмем далее:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki4.png)  
+  Настройка дальше на скриншоте снизу:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki5.png)  
+  На след скриншоте жмем далее:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki6.png)  
+  Настройка базы данных должна быть выполнена успешно, как на скриншоте ниже:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki77.png)  
+  Далее у вас должен скачаться файл LocalSettings.php автомтаически:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/mediawiki8.png)  
+  Потом переходим в директории загрузки:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/localsettings.png)  
+  Открывем директорию через терминал:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/localsettingsterm.png)  
+  Перекидываем его через scp следующим образом:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/localsettingsterm2.png)  
+  Переходим на сервер и убеждаем, что файл находится рядом с нашим wiki.yml:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/localsettingsterm3.png)  
+  Далее раскоменчиваем строку в файле wiki.yml:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/localsettingswikiyml.png)   
+  Запускаем стек контейнеров командой docker-compose -f wiki.yml up -d    
+  Далее переходим по доменному имени или адреса нашего сервера и наблюдаем вот это:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/wikidemo.png)  
+  Для проверки того, что все получилось входим под админской учеткой Wiki:WikiP@ssw0rd:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/wikidemologin.png)  
+  Должно получиться вот так:  
+  ![wikinext](https://github.com/dizzamer/DEMO2025/blob/main/wikiuser.png)  
 ## 6.	На маршрутизаторах сконфигурируйте статическую трансляцию портов  
 ### •	Пробросьте порт 80 в порт 8080 на BR-SRV на маршрутизаторе BR-RTR, для обеспечения работы сервиса wiki  
      Настройка производится на EcoRouter BR-RTR:  
