@@ -555,7 +555,7 @@
     Установка необходимых пакетов:  
     dnf install docker-ce docker-ce-cli docker-compose -y  
     systemctl enable docker --now
-    Добавляем текущего пользователя в группу докер  
+    Добавляем текущего пользователя в группу докер, текущий пользователь - student   
     usermod -aG docker $USER  
 ### •	Создайте в домашней директории пользователя файл wiki.yml для приложения MediaWiki.  
      Развертывание производится на сервере BR-SRV:   
@@ -592,6 +592,7 @@
       После установки необходимо раскоментировать строчку с решеткой в файле wiki.yml:  
       docker-compose -f wiki.yml stop  
       docker-compose -f wiki.yml up -d  
+ ![wikiyml](https://github.com/dizzamer/DEMO2025/blob/main/wikiyml.png)
 •	Средствами docker compose должен создаваться стек контейнеров с приложением MediaWiki и базой данных.  
 •	Используйте два сервиса  
 •	Основной контейнер MediaWiki должен называться wiki и использовать образ mediawiki  
