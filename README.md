@@ -567,7 +567,7 @@
         image: mediawiki
         restart: always
         ports: 
-          - 80:8080
+          - 8080:80
         links:
           - database
         volumes:
