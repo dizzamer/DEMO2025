@@ -479,31 +479,26 @@
      rule 1 permit tcp any eq 22 any  
      end  
      wr mem  
-     en
      configure
      ip vrf vrf0  
      transport input ssh    
      security 1 vrf vrf0  
      end  
      wr mem  
-     en
      conf
      no security default  
      Настройка производится на BR-RTR: 
-     en  
      conf  
      security-profile 1  
      rule 1 permit tcp any eq 22 any  
      end  
      wr mem  
-     en
      configure
      ip vrf vrf0  
      transport input ssh    
      security 1 vrf vrf0  
      end  
      wr mem  
-     en
      conf
      no security default
   ## •	Сформируйте файл инвентаря, в инвентарь должны входить HQ-SRV, HQ-CLI, HQ-RTR и BR-RTR  
