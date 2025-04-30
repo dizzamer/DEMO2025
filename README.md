@@ -648,47 +648,47 @@
      ip nat destination static tcp 192.168.1.2 2024 192.168.1.65 2024  
 ## 7.	Запустите сервис moodle на сервере HQ-SRV:  
 ### Подготовка  
- Выключаем selinux:
- setenforce 0
- nano /etc/selinux 
- Переводим в состояние disabled
- dnf install -y git httpd mariadb-server php php-cli php-common php-fpm php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-xml php-xmlrpc php-pecl-zip php-soap  
+ Выключаем selinux:  
+ setenforce 0  
+ nano /etc/selinux  
+ Переводим в состояние disabled  
+ dnf install -y git httpd mariadb-server php php-cli php-common php-fpm php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-xml php-xmlrpc php-pecl-zip php-soap   
 ## •	Используйте веб-сервер apache  
-    systemctl enable --now httpd 
-    Создаем конфигурационный файл /etc/httpd/conf.d/moodle.conf:
-    nano /etc/httpd/conf.d/moodle.conf
-    <VirtualHost *:80>
-        DocumentRoot "/var/www/html/moodle"
-        ServerName HQ-SRV
-        <Directory "/var/www/html/moodle">
-            AllowOverride All
-            Require all granted
-        </Directory>
-        ErrorLog "/var/log/httpd/moodle_error.log"
-        CustomLog "/var/log/httpd/moodle_access.log" combined
-    </VirtualHost>
-     Перезапускаем Apache:
-     systemctl restart httpd 
+    systemctl enable --now httpd  
+    Создаем конфигурационный файл /etc/httpd/conf.d/moodle.conf:  
+    nano /etc/httpd/conf.d/moodle.conf  
+    <VirtualHost *:80>  
+        DocumentRoot "/var/www/html/moodle"  
+        ServerName HQ-SRV  
+        <Directory "/var/www/html/moodle">  
+            AllowOverride All  
+            Require all granted  
+        </Directory>  
+        ErrorLog "/var/log/httpd/moodle_error.log"  
+        CustomLog "/var/log/httpd/moodle_access.log" combined  
+    </VirtualHost>  
+     Перезапускаем Apache:  
+     systemctl restart httpd   
 ## •	В качестве системы управления базами данных используйте mariadb  
      systemctl enable --now mariadb  
      mysql_secure_installation  
 ## •	Создайте базу данных moodledb  
-     mysql -u root -p  
+     mysql -u root -p   
      CREATE DATABASE moodledb DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;  
 ## •	Создайте пользователя moodle с паролем P@ssw0rd и предоставьте ему права доступа к этой базе данных  
-     CREATE USER 'moodle'@'localhost' IDENTIFIED BY 'P@ssw0rd';  
-     GRANT ALL PRIVILEGES ON moodledb.* TO 'moodle'@'localhost';  
-     FLUSH PRIVILEGES;  
-     EXIT;  
+     CREATE USER 'moodle'@'localhost' IDENTIFIED BY 'P@ssw0rd';   
+     GRANT ALL PRIVILEGES ON moodledb.* TO 'moodle'@'localhost';   
+     FLUSH PRIVILEGES;   
+     EXIT;   
 ## •	У пользователя admin в системе обучения задайте пароль P@ssw0rd  
-     Создаем директории для нашего moodle
-     mkdir /opt/moodle
-     mkdir /usr/moodle_data
-     Далее переходим в директорию и клонируем
-     cd /opt/moodle
-     git clone git://git.moodle.org/moodle.git
-     cd /opt/moodle/moodle
-     cp config-dist.php config.php
+     Создаем директории для нашего moodle  
+     mkdir /opt/moodle  
+     mkdir /usr/moodle_data  
+     Далее переходим в директорию и клонируем  
+     cd /opt/moodle  
+     git clone git://git.moodle.org/moodle.git  
+     cd /opt/moodle/moodle  
+     cp config-dist.php config.php  
 •	На главной странице должен отражаться номер рабочего места в виде арабской цифры, других подписей делать не надо  
 •	Основные параметры отметьте в отчёте  
 ## 8.	Настройте веб-сервер nginx как обратный прокси-сервер на HQ-RTR  
