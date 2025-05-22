@@ -650,8 +650,6 @@
 ### Подготовка  
  Выключаем selinux:  
  setenforce 0  
- nano /etc/selinux  
- Переводим в состояние disabled  
  dnf install -y git httpd mariadb-server php php-cli php-common php-fpm php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-xml php-xmlrpc php-pecl-zip php-soap   
 ## •	Используйте веб-сервер apache  
     systemctl enable --now httpd  
