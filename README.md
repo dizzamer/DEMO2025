@@ -594,6 +594,8 @@
       dbvolume:
           external: true
       images:
+      Перед поднятием контейнеров необходимо прописать:
+      docker volume create dbvolume
       Поднимаем стек контейнеров с помощью команды: 
       docker compose -f wiki.yml up -d  
  ![wikiyml](https://github.com/dizzamer/DEMO2025/blob/main/wikiyml.png)  
